@@ -496,18 +496,22 @@ def _render_ai_synthesis_preview(kpis, comparison, df, mapped, platform):
     
     primary_takeaway = insights.get("primary_takeaway", "Upload data for insights.")
     
-    st.markdown(f"""
-    <div style="background: #1A1B2E; border-radius: 12px; padding: 20px; color: white;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <span style="font-size: 0.75rem; color: rgba(255,255,255,0.6);">PRIMARY TAKEAWAY</span>
-            <span style="background: {source_color}; color: white; padding: 2px 10px; border-radius: 12px; 
-                         font-size: 0.7rem; font-weight: 600;">{source_label}</span>
-        </div>
-        <p style="font-size: 0.95rem; line-height: 1.6; margin: 0; color: rgba(255,255,255,0.9);">
-            {primary_takeaway}
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+    card_html = (
+        f'<div style="background:white;border-radius:12px;padding:20px;'
+        f'border:1px solid #E8E8F0;border-left:4px solid {PRIMARY};box-shadow:0 2px 6px rgba(0,0,0,0.02);">'
+        f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">'
+        f'<div style="font-weight:700;font-size:0.95rem;color:{TEXT_PRIMARY};display:flex;align-items:center;gap:6px;">'
+        f'<span style="color:{PRIMARY};">✨</span> AI Synthesis'
+        f'</div>'
+        f'<span style="background:{source_color};color:white;padding:2px 10px;border-radius:12px;font-size:0.7rem;font-weight:600;">{source_label}</span>'
+        f'</div>'
+        f'<div style="background:#F0F0FF;border:1px solid #E0E2FF;border-radius:8px;padding:12px 14px;margin-bottom:12px;">'
+        f'<div style="font-size:0.68rem;font-weight:800;color:{PRIMARY};letter-spacing:0.5px;margin-bottom:4px;">PRIMARY TAKEAWAY</div>'
+        f'<p style="font-size:0.88rem;line-height:1.55;margin:0;color:{TEXT_PRIMARY};font-weight:500;">{primary_takeaway}</p>'
+        f'</div>'
+        f'</div>'
+    )
+    st.markdown(card_html, unsafe_allow_html=True)
     
     # Show top recommendations
     recs = insights.get("recommendations", [])[:2]

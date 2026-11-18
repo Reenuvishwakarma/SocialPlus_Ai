@@ -479,24 +479,67 @@
     }
     .post-metrics span b { color: var(--text-main); }
 
-    /* ─── AI SYNTHESIS DARK CARD ─── */
+    /* ─── AI SYNTHESIS WHITE CARD (STITCH SAAS STYLE) ─── */
     .ai-card {
-      background: #1A1B2E;
-      color: white;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--primary);
       border-radius: 12px;
-      padding: 24px;
+      padding: 22px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     .ai-tag {
-      font-size: 0.72rem;
-      letter-spacing: 1px;
-      color: rgba(255,255,255,0.6);
-      font-weight: 700;
-      margin-bottom: 8px;
+      font-size: 0.7rem;
+      letter-spacing: 0.5px;
+      color: var(--primary);
+      font-weight: 800;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+    .ai-takeaway-box {
+      background: var(--primary-bg);
+      border: 1px solid #E0E2FF;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
     }
     .ai-takeaway {
-      font-size: 0.95rem;
-      line-height: 1.6;
-      color: rgba(255,255,255,0.95);
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: var(--text-main);
+      font-weight: 500;
+    }
+    .ai-takeaway b {
+      color: var(--primary);
+    }
+    .ai-recs-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .ai-rec-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+    .ai-rec-item span {
+      color: var(--primary);
+      font-weight: 700;
+    }
+    .ai-confidence-pill {
+      background: #E0F2FE;
+      color: #0369A1;
+      padding: 3px 10px;
+      border-radius: 14px;
+      font-size: 0.7rem;
+      font-weight: 700;
     }
 
     /* ─── UPLOAD DROP ZONE ─── */
@@ -748,7 +791,7 @@
           </div>
         </div>
 
-        <!-- TOP 3 POSTS QUICK VIEW + AI SYNTHESIS -->
+        <!-- TOP POSTS QUICK VIEW + AI SYNTHESIS -->
         <div class="grid-half">
           <div class="panel">
             <div class="panel-header">
@@ -764,23 +807,39 @@
           </div>
 
           <div class="ai-card">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-              <div class="ai-tag">AI SYNTHESIS • PRIMARY TAKEAWAY</div>
-              <span style="background: var(--success); color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.68rem; font-weight: 700;">Verified Grounded</span>
-            </div>
-            <div class="ai-takeaway" id="ai-quick-takeaway">
-              Carousel posts generated the highest average engagement rate (9.65%) during the reporting period, driving 2.8x higher saves than single static images.
-            </div>
-            <div style="margin-top: 20px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.15);">
-              <div style="font-size: 0.78rem; font-weight: 700; color: white; margin-bottom: 8px;">Key Recommendations:</div>
-              <div style="font-size: 0.82rem; color: rgba(255,255,255,0.85); line-height: 1.6;">
-                ✦ Shift content production towards Educational Carousels with structured takeaways.<br>
-                ✦ Increase publishing frequency to 4–5 posts per week for maximum algorithmic discoverability.
+            <div>
+              <div class="panel-header" style="margin-bottom: 12px;">
+                <div>
+                  <div class="panel-title" style="display: flex; align-items: center; gap: 8px;">
+                    <span style="color: var(--primary);">✨</span> AI Synthesis
+                  </div>
+                  <div class="panel-subtitle">Data-grounded performance intelligence</div>
+                </div>
+                <span class="ai-confidence-pill">94% Confidence</span>
+              </div>
+
+              <div class="ai-takeaway-box">
+                <div class="ai-tag">PRIMARY TAKEAWAY</div>
+                <div class="ai-takeaway" id="ai-quick-takeaway">
+                  Carousels with practical step-by-step frameworks drove <b>2.8x higher saves</b> than single static images, directly boosting algorithmic reach.
+                </div>
+              </div>
+
+              <div class="ai-recs-list" id="ai-quick-recs">
+                <div class="ai-rec-item">
+                  <span>✦</span> <div><b>Format Shift:</b> Prioritize Carousel posts to maximize save-to-reach multipliers.</div>
+                </div>
+                <div class="ai-rec-item">
+                  <span>✦</span> <div><b>Publishing Pace:</b> Maintain 4–5 posts per week for optimal algorithmic discoverability.</div>
+                </div>
               </div>
             </div>
-            <button class="btn btn-primary" style="margin-top: 18px; width: 100%; justify-content: center; background: var(--primary);" onclick="switchView('ai')">
-              Open Full AI Insights Workspace →
-            </button>
+
+            <div style="display: flex; justify-content: flex-end; align-items: center; padding-top: 12px; border-top: 1px solid var(--border); margin-top: auto;">
+              <button class="btn btn-primary" style="padding: 7px 16px; font-size: 0.78rem;" onclick="switchView('ai')">
+                Open Full AI Insights Workspace →
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -1170,6 +1229,26 @@
               </div>
             `;
           });
+
+          // Fetch AI Insights for the quick card
+          fetch('/api/ai-insights')
+            .then(r => r.json())
+            .then(ai => {
+              if (ai && ai.primary_takeaway) {
+                document.getElementById('ai-quick-takeaway').innerText = ai.primary_takeaway;
+              }
+              if (ai && ai.recommendations && ai.recommendations.length > 0) {
+                const recsBox = document.getElementById('ai-quick-recs');
+                recsBox.innerHTML = '';
+                ai.recommendations.slice(0, 2).forEach(r => {
+                  recsBox.innerHTML += `
+                    <div class="ai-rec-item">
+                      <span>✦</span> <div><b>${r.title}:</b> ${r.description}</div>
+                    </div>
+                  `;
+                });
+              }
+            }).catch(() => {});
         });
     }
 
