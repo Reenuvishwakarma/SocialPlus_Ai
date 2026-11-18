@@ -157,37 +157,35 @@ def _render_status_strip(platform, df, mapped, kpis, comparison, comp_summary):
             pct = reach_comp.get("percentage_change", 0)
             color = SUCCESS if pct and pct >= 0 else DANGER
             arrow = "↑" if pct and pct >= 0 else "↓"
-            overall_change_html = f"""
-            <div style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; 
-                        background: {'#E6F4ED' if pct and pct >= 0 else '#FDE8EA'}; border-radius: 20px;">
-                <span style="color: {color}; font-weight: 600;">{arrow} {abs(pct or 0):.1f}% prev 30d</span>
-            </div>
-            """
-    
+            bg_color = "#E6F4ED" if pct and pct >= 0 else "#FDE8EA"
+            overall_change_html = f'<div style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:{bg_color};border-radius:20px;"><span style="color:{color};font-weight:600;">{arrow} {abs(pct or 0):.1f}% prev 30d</span></div>'
+
     num_recs = 0
     if st.session_state.ai_insights:
         recs = st.session_state.ai_insights.get("recommendations", [])
         num_recs = len(recs)
-    
-    st.markdown(f"""
-    <div style="display: flex; align-items: center; gap: 16px; padding: 12px 20px; 
-                background: white; border-radius: 10px; margin-bottom: 20px; 
-                border: 1px solid #E8E8F0; flex-wrap: wrap;">
-        <div style="display: flex; align-items: center; gap: 8px;">
-            <span style="width: 8px; height: 8px; border-radius: 50%; background: {SUCCESS}; display: inline-block;"></span>
-            <span style="font-size: 0.85rem; color: {TEXT_MUTED};">ACTIVE CHANNEL:</span>
-            <span style="font-size: 0.85rem; font-weight: 600; color: {TEXT_PRIMARY};">@{dataset_info.get('name', 'dataset')} ({platform})</span>
-        </div>
-        <div style="color: #E8E8F0;">|</div>
-        <div style="display: flex; align-items: center; gap: 6px;">
-            <span style="font-size: 0.85rem; color: {TEXT_MUTED};">📅</span>
-            <span style="font-size: 0.85rem; color: {TEXT_PRIMARY};">{date_range_str}</span>
-        </div>
-        {f'<div style="color: #E8E8F0;">|</div><div style="font-size: 0.85rem; color: {PRIMARY};">⚡ {num_recs} actionable AI recommendations available</div>' if num_recs > 0 else ''}
-        <div style="flex: 1;"></div>
-        {overall_change_html}
-    </div>
-    """, unsafe_allow_html=True)
+
+    recs_badge = f'<div style="color:#E8E8F0;">|</div><div style="font-size:0.85rem;color:{PRIMARY};">⚡ {num_recs} actionable AI recommendations available</div>' if num_recs > 0 else ''
+
+    status_html = (
+        f'<div style="display:flex;align-items:center;gap:16px;padding:12px 20px;'
+        f'background:white;border-radius:10px;margin-bottom:20px;border:1px solid #E8E8F0;flex-wrap:wrap;">'
+        f'<div style="display:flex;align-items:center;gap:8px;">'
+        f'<span style="width:8px;height:8px;border-radius:50%;background:{SUCCESS};display:inline-block;"></span>'
+        f'<span style="font-size:0.85rem;color:{TEXT_MUTED};">ACTIVE CHANNEL:</span>'
+        f'<span style="font-size:0.85rem;font-weight:600;color:{TEXT_PRIMARY};">@{dataset_info.get("name", "dataset")} ({platform})</span>'
+        f'</div>'
+        f'<div style="color:#E8E8F0;">|</div>'
+        f'<div style="display:flex;align-items:center;gap:6px;">'
+        f'<span style="font-size:0.85rem;color:{TEXT_MUTED};">📅</span>'
+        f'<span style="font-size:0.85rem;color:{TEXT_PRIMARY};">{date_range_str}</span>'
+        f'</div>'
+        f'{recs_badge}'
+        f'<div style="flex:1;"></div>'
+        f'{overall_change_html}'
+        f'</div>'
+    )
+    st.markdown(status_html, unsafe_allow_html=True)
 
 
 def _render_kpi_cards(kpis, comparison):
@@ -225,33 +223,29 @@ def _render_kpi_cards(kpis, comparison):
                     if pct is not None:
                         color = SUCCESS if pct >= 0 else DANGER
                         arrow = "↑" if pct >= 0 else "↓"
-                        change_html = f"""
-                        <div style="display: flex; align-items: center; gap: 4px; margin-top: 4px;">
-                            <span style="color: {color}; font-size: 0.8rem; font-weight: 600;">{arrow} {abs(pct):.1f}%</span>
-                        </div>
-                        """
-            
+                        change_html = f'<div style="display:flex;align-items:center;gap:4px;margin-top:4px;"><span style="color:{color};font-size:0.8rem;font-weight:600;">{arrow} {abs(pct):.1f}%</span></div>'
+
             # Additional info for follower growth
             extra_html = ""
             if key == "net_follower_growth" and kpis.get("latest_followers", {}).get("available"):
                 total = kpis["latest_followers"]["value"]
-                extra_html = f'<div style="font-size: 0.75rem; color: {TEXT_MUTED};">Total: {format_number(total)}</div>'
-            
-            st.markdown(f"""
-            <div style="background: white; border-radius: 12px; padding: 20px; 
-                        box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #F0F0F5;
-                        height: 140px;">
-                <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
-                    <span style="font-size: 0.85rem; color: {TEXT_MUTED}; font-weight: 500;">{label}</span>
-                    <span>{icon}</span>
-                </div>
-                <div style="font-size: 1.75rem; font-weight: 700; color: {TEXT_PRIMARY}; line-height: 1.2;">
-                    {display_val}
-                </div>
-                {change_html}
-                {extra_html}
-            </div>
-            """, unsafe_allow_html=True)
+                extra_html = f'<div style="font-size:0.75rem;color:{TEXT_MUTED};margin-top:2px;">Total: {format_number(total)}</div>'
+
+            card_html = (
+                f'<div style="background:white;border-radius:12px;padding:20px;'
+                f'box-shadow:0 2px 8px rgba(0,0,0,0.06);border:1px solid #F0F0F5;height:140px;">'
+                f'<div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">'
+                f'<span style="font-size:0.85rem;color:{TEXT_MUTED};font-weight:500;">{label}</span>'
+                f'<span>{icon}</span>'
+                f'</div>'
+                f'<div style="font-size:1.75rem;font-weight:700;color:{TEXT_PRIMARY};line-height:1.2;">'
+                f'{display_val}'
+                f'</div>'
+                f'{change_html}'
+                f'{extra_html}'
+                f'</div>'
+            )
+            st.markdown(card_html, unsafe_allow_html=True)
 
 
 def _render_performance_trends(df, mapped):
