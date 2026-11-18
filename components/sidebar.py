@@ -90,18 +90,3 @@ def render_sidebar():
             ):
                 st.session_state.current_page = page_name
                 st.rerun()
-
-        # ── User Profile Section ────────────────────────────────────────
-        st.markdown("<div style='flex:1; min-height:40px;'></div>", unsafe_allow_html=True)
-        st.markdown("---")
-        st.markdown(f"""
-        <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0;">
-            <div style="width: 32px; height: 32px; background: {PRIMARY}; border-radius: 50%;
-                        display: flex; align-items: center; justify-content: center;
-                        color: white; font-weight: 600; font-size: 0.8rem;">AM</div>
-            <div>
-                <div style="font-size: 0.82rem; font-weight: 600; color: {TEXT_PRIMARY};">Alex Morgan</div>
-                <div style="font-size: 0.7rem; color: {SUCCESS};">● Streamlit Active</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
