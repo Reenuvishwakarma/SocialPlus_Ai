@@ -1,0 +1,65 @@
+Post_ID,Publish_Date,Post_Type,Caption,Reach,Impressions,Likes,Comments,Shares,Saves,Profile_Visits,Followers,Engagement_Rate
+ig_001,2024-08-01,REELS,AI is rewriting the marketing playbook 🚀,18500,27750,920,85,210,145,320,42000,7.35
+ig_002,2024-08-01,CAROUSEL,5 ChatGPT prompts every marketer needs (save this),12400,19840,680,120,95,310,245,42000,9.72
+ig_003,2024-08-02,STATIC,Your brand voice matters more than your budget 💡,5200,7800,215,42,18,35,95,42050,5.96
+ig_004,2024-08-02,REELS,POV: your content strategy finally clicks,22400,35840,1150,145,340,180,410,42050,8.11
+ig_005,2024-08-03,CAROUSEL,The anatomy of a viral LinkedIn post (thread),14200,22720,780,165,180,285,310,42100,9.93
+ig_006,2024-08-03,STORIES,Quick poll: Reels or Carousels in 2024?,4500,6300,180,88,25,12,120,42100,6.78
+ig_007,2024-08-04,REELS,Stop posting and praying — start analyzing 📊,25600,43520,1340,195,420,220,480,42150,8.50
+ig_008,2024-08-04,STATIC,Monday reminder: consistency beats perfection,4800,6720,195,38,15,28,88,42150,5.75
+ig_009,2024-08-05,CAROUSEL,How we grew 10K followers in 60 days (breakdown),16800,28560,890,210,250,340,365,42200,10.00
+ig_010,2024-08-05,REELS,This AI tool saved us 15 hours a week ⏱️,19200,30720,980,110,280,165,350,42200,8.00
+ig_011,2024-08-06,STORIES,BTS: creating our content calendar 🎬,3200,4160,125,52,14,8,75,42250,6.22
+ig_012,2024-08-06,STATIC,Data without insight is just noise,6200,8060,245,55,22,42,110,42250,5.87
+ig_013,2024-08-07,REELS,The algorithm doesn't hate you — your hooks do 🎣,62000,111600,4800,480,790,385,780,42300,10.41
+ig_014,2024-08-07,CAROUSEL,Content repurposing framework that actually works,11500,17250,620,135,110,275,220,42300,9.91
+ig_015,2024-08-08,REELS,Real talk: vanity metrics are killing your growth,21000,33600,1050,160,310,175,390,42380,8.07
+ig_016,2024-08-08,STATIC,Every scroll is a micro-decision. Make yours count.,4100,5740,170,32,12,25,72,42380,5.83
+ig_017,2024-08-09,CAROUSEL,10 Canva hacks for social media managers 🎨,15600,24960,820,175,165,350,340,42420,9.68
+ig_018,2024-08-09,REELS,We A/B tested 50 hooks — here's what won,28500,48450,1480,220,380,195,450,42420,7.98
+ig_019,2024-08-10,STORIES,What tool do you use for scheduling? 🗓️,5100,7140,195,95,30,15,135,42460,6.57
+ig_020,2024-08-10,CAROUSEL,SEO in 2024: it's not what you think,10200,15300,540,105,88,230,195,42460,9.44
+ig_021,2024-08-11,REELS,Your competitor's secret? They just post more often,17800,28480,880,95,195,140,290,42500,7.36
+ig_022,2024-08-11,STATIC,Small audience + high trust = big revenue,5800,8120,235,48,20,38,100,42500,5.88
+ig_023,2024-08-12,CAROUSEL,The ultimate Instagram analytics cheat sheet 📋,13500,21600,720,155,145,320,280,42550,9.93
+ig_024,2024-08-12,REELS,Social proof isn't optional anymore — here's why,20100,32160,1020,135,275,160,370,42550,7.89
+ig_025,2024-08-13,STORIES,Caption this! Wrong answers only 😂,6800,9520,280,185,45,20,165,42600,7.79
+ig_026,2024-08-13,REELS,I asked AI to roast my Instagram strategy 🤖🔥,58000,98600,4500,450,720,360,720,42600,10.40
+ig_027,2024-08-14,CAROUSEL,Brand storytelling: 7 frameworks that convert,12800,19200,680,140,120,290,250,42680,9.61
+ig_028,2024-08-14,STATIC,Your bio is your billboard. Optimize it.,3800,5320,155,35,10,22,65,42680,5.84
+ig_029,2024-08-15,REELS,Why your Reels aren't hitting 10K views anymore,24300,41310,1250,175,350,190,420,42720,8.09
+ig_030,2024-08-15,CAROUSEL,Email list vs followers: where to invest in 2024?,9800,15680,510,120,80,245,180,42720,9.74
+ig_031,2024-08-16,STORIES,Friday mood: when the engagement rate spikes 📈,3800,5320,145,62,18,10,90,42760,6.18
+ig_032,2024-08-16,REELS,Threads vs Twitter for brand growth — honest review,16500,26400,820,110,180,130,275,42760,7.52
+ig_033,2024-08-17,STATIC,Create once. Distribute everywhere. Repeat.,5500,7700,220,45,18,32,98,42800,5.73
+ig_034,2024-08-17,CAROUSEL,How to write hooks that stop the scroll ✋,14800,23680,790,160,155,310,310,42800,9.56
+ig_035,2024-08-18,REELS,Spent $0 on ads — here's what organic did instead,31500,53550,1620,245,410,210,490,42850,7.89
+ig_036,2024-08-18,STATIC,Engagement > Followers. Always.,4200,5880,175,40,14,28,78,42850,6.12
+ig_037,2024-08-19,CAROUSEL,The content matrix: plan 30 posts in 1 hour ⚡,11200,17920,590,130,100,265,215,42900,9.69
+ig_038,2024-08-19,REELS,Your audience doesn't want perfection — they want you,18900,30240,950,120,240,155,330,42900,7.75
+ig_039,2024-08-20,STORIES,AMA: ask me anything about growth hacking 🧠,4200,5880,160,110,22,14,100,42950,7.29
+ig_040,2024-08-20,REELS,3 metrics that actually predict growth (not vanity),20500,34850,1060,140,290,170,380,42950,8.10
+ig_041,2024-08-21,CAROUSEL,LinkedIn vs Instagram for B2B — the data speaks,13600,21760,730,150,135,280,270,43020,9.52
+ig_042,2024-08-21,STATIC,People don't buy products. They buy transformations.,6800,9520,270,52,24,40,115,43020,5.68
+ig_043,2024-08-22,REELS,This hook formula got us 1M views this month 🏆,64500,116100,4950,495,810,395,800,43100,10.31
+ig_044,2024-08-22,CAROUSEL,Complete guide: Instagram algorithm 2024 update,15200,24320,810,170,160,330,320,43100,9.67
+ig_045,2024-08-23,REELS,Marketing without data is just expensive guessing,19800,31680,990,125,260,155,345,43150,7.73
+ig_046,2024-08-23,STORIES,Rate my feed 1-10! Be honest 💬,5500,7700,210,145,35,18,145,43150,7.42
+ig_047,2024-08-24,CAROUSEL,Swipe to see our best performing content types →,10800,16200,560,115,90,250,200,43200,9.40
+ig_048,2024-08-24,STATIC,Great copy isn't written. It's rewritten.,3600,5040,148,30,12,20,60,43200,5.83
+ig_049,2024-08-25,REELS,We analyzed 500 viral posts — patterns revealed 🔍,26800,45560,1380,200,360,200,440,43280,7.99
+ig_050,2024-08-25,CAROUSEL,Personal branding mistakes killing your growth,12000,18000,640,135,105,270,235,43280,9.58
+ig_051,2024-08-26,REELS,Stop blaming the algorithm. Fix your content.,17200,27520,860,100,190,135,280,43350,7.47
+ig_052,2024-08-26,STATIC,Trends fade. Strategy compounds. Choose wisely.,5000,7000,200,42,16,30,85,43350,5.76
+ig_053,2024-08-27,CAROUSEL,How to create a media kit that gets brand deals 💰,14500,23200,760,155,140,300,295,43420,9.35
+ig_054,2024-08-27,STORIES,Quick tip: best posting times this week ⏰,3500,4900,135,55,16,10,80,43420,6.17
+ig_055,2024-08-28,REELS,The 3-second rule: why most Reels fail instantly,23500,39950,1200,165,330,185,405,43480,8.00
+ig_056,2024-08-28,CAROUSEL,AI tools we actually use daily (honest list),13200,21120,710,145,125,290,260,43480,9.62
+ig_057,2024-08-28,STATIC,Your next follower is watching your last 9 posts,4500,6300,185,38,14,24,74,43480,5.80
+ig_058,2024-08-29,REELS,Engagement bait vs genuine engagement — know the diff,19500,31200,980,130,255,160,340,43550,7.82
+ig_059,2024-08-29,CAROUSEL,Building a content flywheel: step-by-step guide 🔄,11800,18880,620,130,105,260,225,43550,9.45
+ig_060,2024-08-30,REELS,What 1 year of consistent posting taught me 🎓,55000,93500,4200,420,680,345,680,43620,10.26
+ig_061,2024-08-30,STATIC,Done is better than perfect. Post it.,4000,5600,165,34,12,22,68,43620,5.83
+ig_062,2024-08-30,CAROUSEL,Our tech stack for social media management 🛠️,10500,15750,545,110,85,240,195,44800,9.33
+ig_063,2024-08-30,STORIES,Thank you for 44K! What should we post next? 🎉,7200,10080,290,165,42,22,170,45200,7.21
+ig_064,2024-08-30,REELS,2024 isn't over — your best content is ahead 🔥,21800,37060,1100,150,290,170,380,45420,7.84
