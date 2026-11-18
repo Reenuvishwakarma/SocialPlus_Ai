@@ -493,7 +493,8 @@ def export_pdf():
     )
 
 
+init_default_data()
+
 if __name__ == "__main__":
-    init_default_data()
-    print("🚀 SocialPulse AI Native High-Performance Server running at http://localhost:5000")
-    app.run(host="0.0.0.0", port=5000, debug=False)
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port, debug=False)
