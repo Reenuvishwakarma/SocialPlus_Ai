@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,145 +10,202 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     :root {
-      --primary: #4648D4;
-      --primary-light: #6063EE;
-      --primary-bg: #F0F0FF;
-      --bg-page: #F9F9FF;
-      --card-bg: #FFFFFF;
-      --secondary: #00687A;
-      --success: #00885D;
-      --success-light: #E6F4ED;
-      --danger: #DC3545;
-      --danger-light: #FDE8EA;
+      /* Palette Tokens */
+      --primary: #4338CA;
+      --primary-gradient: linear-gradient(135deg, #4338CA 0%, #7C3AED 100%);
+      --primary-light: #7C3AED;
+      --primary-subtle: rgba(67, 56, 202, 0.08);
+      --secondary: #06B6D4;
+      --accent-blue: #3B82F6;
+      --success: #10B981;
+      --success-subtle: rgba(16, 185, 129, 0.1);
+      --danger: #F43F5E;
+      --danger-subtle: rgba(244, 63, 94, 0.1);
       --warning: #F59E0B;
-      --text-main: #141B2B;
-      --text-muted: #767586;
-      --border: #E8E8F0;
+      --warning-subtle: rgba(245, 158, 11, 0.1);
+
+      /* Theme Backgrounds */
+      --bg-page: #F5F3FF;
+      --bg-header: rgba(255, 255, 255, 0.85);
+      --card-bg: #FFFFFF;
+      --card-bg-subtle: #F8FAFC;
+      --card-hover: #F1F5F9;
+      --sidebar-bg: #FFFFFF;
+
+      /* Text and Borders */
+      --text-main: #0F172A;
+      --text-secondary: #475569;
+      --text-muted: #64748B;
+      --border: rgba(99, 102, 241, 0.12);
+      --border-subtle: rgba(0, 0, 0, 0.06);
+
+      /* Shadows */
+      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02);
+      --shadow-md: 0 4px 12px -2px rgba(67, 56, 202, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
+      --shadow-lg: 0 12px 28px -6px rgba(67, 56, 202, 0.1), 0 6px 12px -3px rgba(15, 23, 42, 0.04);
+      --shadow-glow: 0 0 20px rgba(124, 58, 237, 0.18);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    [data-theme="dark"] {
+      --bg-page: #0B0F19;
+      --bg-header: rgba(11, 15, 25, 0.88);
+      --card-bg: #121826;
+      --card-bg-subtle: #182234;
+      --card-hover: #1E293B;
+      --sidebar-bg: #0F1422;
+
+      --text-main: #F8FAFC;
+      --text-secondary: #CBD5E1;
+      --text-muted: #94A3B8;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-subtle: rgba(255, 255, 255, 0.05);
+
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 12px 30px rgba(0, 0, 0, 0.55);
+      --shadow-glow: 0 0 24px rgba(124, 58, 237, 0.25);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease; }
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background-color: var(--bg-page);
       color: var(--text-main);
       display: flex;
       height: 100vh;
       overflow: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    h1, h2, h3, h4, .brand-title {
+    h1, h2, h3, h4, h5, .brand-title, .kpi-val, .metric-big {
       font-family: 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: -0.02em;
     }
+
+    /* ─── SCROLLBAR STYLING ─── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.25); border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(100, 116, 139, 0.45); }
 
     /* ─── SIDEBAR ─── */
     .sidebar {
       width: 270px;
       min-width: 270px;
-      background: var(--card-bg);
+      background: var(--sidebar-bg);
       border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      padding: 20px 16px;
-      z-index: 10;
+      padding: 24px 18px 20px;
+      z-index: 20;
+      box-shadow: var(--shadow-sm);
     }
 
     .brand-section {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding-bottom: 18px;
+      gap: 12px;
+      padding-bottom: 20px;
       border-bottom: 1px solid var(--border);
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
     .brand-logo {
-      width: 38px;
-      height: 38px;
-      background: var(--primary);
-      border-radius: 9px;
+      width: 42px;
+      height: 42px;
+      background: var(--primary-gradient);
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
-      font-size: 1.2rem;
-      font-weight: 700;
+      font-size: 20px;
+      font-weight: 800;
+      box-shadow: 0 4px 12px rgba(67, 56, 202, 0.35);
+      flex-shrink: 0;
+    }
+    .brand-info {
+      display: flex;
+      flex-direction: column;
     }
     .brand-title {
+      font-size: 1.05rem;
       font-weight: 800;
-      font-size: 0.95rem;
-      line-height: 1.2;
-      color: var(--text-main);
+      background: linear-gradient(135deg, #4338CA 0%, #7C3AED 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-    .brand-badge {
-      font-size: 0.65rem;
-      background: var(--primary-bg);
-      color: var(--primary);
-      padding: 2px 6px;
-      border-radius: 4px;
+    [data-theme="dark"] .brand-title {
+      background: linear-gradient(135deg, #A5B4FC 0%, #C084FC 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .brand-subtitle {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
       font-weight: 600;
-      margin-left: auto;
     }
 
     .platform-selector {
-      margin-bottom: 16px;
-    }
-    .platform-label {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      font-weight: 600;
-      margin-bottom: 6px;
-      letter-spacing: 0.5px;
-    }
-    .platform-tabs {
       display: flex;
-      background: var(--primary-bg);
+      background: var(--card-bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 10px;
       padding: 3px;
-      border-radius: 8px;
-      gap: 4px;
+      margin-bottom: 16px;
     }
     .platform-btn {
       flex: 1;
+      padding: 7px 10px;
+      border-radius: 8px;
       border: none;
       background: transparent;
-      padding: 7px 0;
-      font-size: 0.8rem;
+      color: var(--text-secondary);
+      font-size: 0.78rem;
       font-weight: 600;
-      color: var(--text-muted);
-      border-radius: 6px;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
       transition: all 0.2s;
     }
     .platform-btn.active {
       background: var(--card-bg);
       color: var(--primary);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      box-shadow: var(--shadow-sm);
+      font-weight: 700;
+    }
+    [data-theme="dark"] .platform-btn.active {
+      color: #A5B4FC;
     }
 
-    .dataset-info-box {
-      background: #F8F9FE;
+    .dataset-badge {
+      background: var(--primary-subtle);
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 10px 12px;
-      margin-bottom: 18px;
+      font-size: 0.74rem;
+      color: var(--text-secondary);
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
-    .dataset-info-label {
-      font-size: 0.68rem;
-      color: var(--text-muted);
-      font-weight: 600;
-      letter-spacing: 0.5px;
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 8px var(--success);
+      flex-shrink: 0;
+      animation: pulse 2s infinite;
     }
-    .dataset-info-name {
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--text-main);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin: 2px 0;
-    }
-    .dataset-info-rows {
-      font-size: 0.72rem;
-      color: var(--success);
-      font-weight: 500;
+    @keyframes pulse {
+      0% { opacity: 0.6; transform: scale(0.95); }
+      50% { opacity: 1; transform: scale(1.1); }
+      100% { opacity: 0.6; transform: scale(0.95); }
     }
 
     .nav-menu {
@@ -156,186 +213,239 @@
       flex-direction: column;
       gap: 4px;
       flex: 1;
-      overflow-y: auto;
+    }
+    .nav-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      font-weight: 700;
+      padding: 8px 10px 4px;
     }
     .nav-item {
       display: flex;
       align-items: center;
       gap: 12px;
       padding: 10px 14px;
-      border-radius: 8px;
-      font-size: 0.86rem;
-      font-weight: 500;
-      color: var(--text-main);
+      border-radius: 10px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text-secondary);
       cursor: pointer;
-      transition: all 0.15s;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      position: relative;
     }
     .nav-item:hover {
-      background: #F0F0FF;
-      color: var(--primary);
+      background: var(--card-hover);
+      color: var(--text-main);
     }
     .nav-item.active {
-      background: var(--primary);
-      color: white;
-      font-weight: 600;
+      background: var(--primary-gradient);
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(67, 56, 202, 0.25);
     }
-    .nav-item.active svg path, .nav-item.active svg circle {
-      stroke: white;
+    .nav-item svg {
+      width: 18px;
+      height: 18px;
+      stroke-width: 2;
     }
 
-    .user-profile {
+    .sidebar-footer {
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 10px;
-      padding-top: 14px;
-      border-top: 1px solid var(--border);
-      margin-top: auto;
     }
-    .user-avatar {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: var(--primary);
-      color: white;
-      font-size: 0.8rem;
-      font-weight: 700;
+    .theme-toggle-btn {
       display: flex;
       align-items: center;
       justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--card-bg-subtle);
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s;
     }
-    .user-name {
-      font-size: 0.82rem;
+    .theme-toggle-btn:hover {
+      background: var(--card-hover);
+      transform: translateY(-1px);
+    }
+    .quick-sample-btn {
+      flex: 1;
+      padding: 7px 12px;
+      font-size: 0.74rem;
       font-weight: 600;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--card-bg-subtle);
+      color: var(--text-secondary);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .quick-sample-btn:hover {
+      background: var(--card-hover);
       color: var(--text-main);
     }
-    .user-status {
-      font-size: 0.7rem;
-      color: var(--success);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .user-status::before {
-      content: "";
-      width: 6px;
-      height: 6px;
-      background: var(--success);
-      border-radius: 50%;
-      display: inline-block;
-    }
 
-    /* ─── MAIN CONTENT ─── */
+    /* ─── MAIN CONTENT AREA ─── */
     .main-wrapper {
       flex: 1;
       display: flex;
       flex-direction: column;
-      height: 100vh;
       overflow: hidden;
+      position: relative;
     }
 
-    .top-header {
-      background: var(--card-bg);
+    /* ─── TOP HEADER ─── */
+    .header {
+      height: 64px;
+      min-height: 64px;
+      background: var(--bg-header);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
-      padding: 14px 28px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
-      z-index: 5;
+      padding: 0 28px;
+      z-index: 10;
     }
-    .breadcrumb {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-    }
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .date-badge {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.84rem;
-      font-weight: 600;
-      color: var(--text-main);
-      background: var(--bg-page);
-      padding: 6px 14px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-    }
-    .btn {
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      border: 1px solid transparent;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.15s;
-    }
-    .btn-secondary {
-      background: white;
-      border-color: var(--border);
-      color: var(--text-main);
-    }
-    .btn-secondary:hover { background: #F8F9FE; }
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-    }
-    .btn-primary:hover {
-      background: var(--primary-light);
-      box-shadow: 0 4px 12px rgba(70, 72, 212, 0.25);
-    }
-
-    .content-area {
-      flex: 1;
-      padding: 24px 28px;
-      overflow-y: auto;
-    }
-
-    /* ─── PAGE CONTAINERS ─── */
-    .page-section { display: none; }
-    .page-section.active { display: block; }
-
-    /* ─── STATUS STRIP ─── */
-    .status-strip {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 20px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-    .status-channel {
+    .breadcrumbs {
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.85rem;
-    }
-    .pulse-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--success);
-      border-radius: 50%;
-    }
-    .status-delta {
-      margin-left: auto;
-      background: var(--success-light);
-      color: var(--success);
-      padding: 6px 14px;
-      border-radius: 20px;
       font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+    .breadcrumbs b {
+      color: var(--text-main);
       font-weight: 700;
+    }
+
+    .header-actions {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 12px;
+    }
+    .date-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-action {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 9px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .btn-secondary {
+      background: var(--card-bg);
+      border-color: var(--border);
+      color: var(--text-secondary);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-secondary:hover {
+      background: var(--card-hover);
+      color: var(--text-main);
+      transform: translateY(-1px);
+    }
+    .btn-primary {
+      background: var(--primary-gradient);
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(67, 56, 202, 0.28);
+    }
+    .btn-primary:hover {
+      box-shadow: 0 6px 20px rgba(67, 56, 202, 0.4);
+      transform: translateY(-1px);
+    }
+
+    /* ─── PAGE VIEW CONTAINER ─── */
+    .view-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 28px 40px;
+      display: none;
+    }
+    .view-content.active {
+      display: block;
+      animation: fadeIn 0.25s ease forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── STATUS & INSIGHT STRIP ─── */
+    .status-strip {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-sm);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .strip-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+    .strip-item b {
+      color: var(--text-main);
+    }
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .badge-violet {
+      background: rgba(124, 58, 237, 0.1);
+      color: #7C3AED;
+      border: 1px solid rgba(124, 58, 237, 0.2);
+    }
+    [data-theme="dark"] .badge-violet {
+      background: rgba(167, 139, 250, 0.15);
+      color: #C084FC;
+    }
+    .badge-emerald {
+      background: rgba(16, 185, 129, 0.12);
+      color: #059669;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+    [data-theme="dark"] .badge-emerald {
+      color: #34D399;
     }
 
     /* ─── KPI CARDS ─── */
@@ -348,763 +458,1183 @@
     .kpi-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 18px 20px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
-      transition: transform 0.15s;
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
-    .kpi-card:hover { transform: translateY(-2px); }
+    .kpi-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--kpi-accent, var(--primary-gradient));
+      opacity: 0.85;
+    }
     .kpi-top {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
-      font-size: 0.82rem;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .kpi-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
       color: var(--text-muted);
-      font-weight: 500;
+    }
+    .kpi-icon-wrap {
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      background: var(--kpi-bg, var(--primary-subtle));
+      color: var(--kpi-color, var(--primary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
     }
     .kpi-val {
-      font-size: 1.8rem;
+      font-size: 1.65rem;
       font-weight: 800;
       color: var(--text-main);
-      line-height: 1.2;
+      margin-bottom: 6px;
+      line-height: 1.1;
+    }
+    .kpi-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.74rem;
     }
     .kpi-delta {
-      margin-top: 6px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
+      font-weight: 700;
     }
-    .kpi-delta.up { color: var(--success); }
-    .kpi-delta.down { color: var(--danger); }
-    .kpi-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
+    .delta-up { color: var(--success); }
+    .delta-down { color: var(--danger); }
+    .kpi-sub {
+      color: var(--text-muted);
+      font-size: 0.7rem;
+    }
 
-    /* ─── TWO COLUMN LAYOUT ─── */
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 3fr 2fr;
-      gap: 20px;
-      margin-bottom: 24px;
-    }
-    .grid-half {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-bottom: 24px;
-    }
-    .panel {
+    /* ─── CARD COMMON ─── */
+    .card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 16px;
       padding: 22px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 22px;
     }
-    .panel-header {
+    .card-header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      justify-content: space-between;
+      margin-bottom: 18px;
     }
-    .panel-title {
-      font-size: 1.05rem;
+    .card-title {
+      font-size: 1rem;
       font-weight: 700;
       color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
-    .panel-subtitle {
-      font-size: 0.78rem;
+    .card-subtitle {
+      font-size: 0.75rem;
       color: var(--text-muted);
       margin-top: 2px;
     }
 
-    /* ─── FORMAT BARS ─── */
-    .format-item { margin-bottom: 16px; }
+    /* ─── TWO COLUMN LAYOUT ─── */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.55fr 1fr;
+      gap: 20px;
+      margin-bottom: 22px;
+    }
+    .grid-equal-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 22px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 22px;
+    }
+
+    /* ─── TREND CHART CONTROLS ─── */
+    .pill-tabs {
+      display: flex;
+      background: var(--card-bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2px;
+    }
+    .pill-tab {
+      padding: 4px 12px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .pill-tab.active {
+      background: var(--card-bg);
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+      font-weight: 700;
+    }
+    [data-theme="dark"] .pill-tab.active {
+      color: #A5B4FC;
+    }
+
+    /* ─── FORMAT PROGRESS ITEM ─── */
+    .format-item {
+      margin-bottom: 14px;
+    }
     .format-item:last-child { margin-bottom: 0; }
     .format-row {
       display: flex;
       justify-content: space-between;
-      font-size: 0.84rem;
+      align-items: center;
+      font-size: 0.8rem;
+      margin-bottom: 6px;
       font-weight: 600;
-      margin-bottom: 5px;
     }
     .format-bar-bg {
-      background: var(--primary-bg);
-      height: 7px;
+      height: 8px;
+      background: var(--card-bg-subtle);
       border-radius: 4px;
       overflow: hidden;
     }
     .format-bar-fill {
-      background: var(--primary);
       height: 100%;
       border-radius: 4px;
-      transition: width 0.5s ease;
+      background: var(--primary-gradient);
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* ─── TOP POSTS CARDS ─── */
+    /* ─── TOP POSTS CARD ─── */
     .post-card {
-      background: var(--card-bg);
+      background: var(--card-bg-subtle);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 16px;
-      margin-bottom: 12px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 10px;
+      transition: all 0.2s;
+    }
+    .post-card:hover {
+      border-color: rgba(99, 102, 241, 0.35);
+      background: var(--card-hover);
+      transform: translateX(2px);
     }
     .post-card-top {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
+      gap: 10px;
       margin-bottom: 6px;
     }
-    .post-badge {
-      font-size: 0.7rem;
-      padding: 2px 8px;
-      border-radius: 12px;
-      background: var(--primary-bg);
-      color: var(--primary);
-      font-weight: 700;
-    }
     .post-caption {
-      font-size: 0.88rem;
+      font-size: 0.82rem;
       font-weight: 600;
       color: var(--text-main);
-      margin-bottom: 4px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-height: 1.4;
     }
-    .post-date { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 10px; }
+    .post-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 12px;
+      background: var(--primary-subtle);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    [data-theme="dark"] .post-badge { color: #A5B4FC; }
+    .post-date {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
     .post-metrics {
       display: flex;
-      gap: 16px;
+      gap: 14px;
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+    }
+
+    /* ─── AI SYNTHESIS CARD ─── */
+    .ai-synthesis-card {
+      background: linear-gradient(145deg, #131A2E 0%, #0F1424 100%);
+      color: #F8FAFC;
+      border: 1px solid rgba(124, 58, 237, 0.35);
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(15, 20, 36, 0.45);
+      position: relative;
+      overflow: hidden;
+    }
+    .ai-synthesis-card::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 140px;
+      height: 140px;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.3) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .ai-synth-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .ai-badge {
+      background: rgba(124, 58, 237, 0.25);
+      border: 1px solid rgba(167, 139, 250, 0.4);
+      color: #DDD6FE;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .ai-confidence {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34D399;
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 0.68rem;
+      font-weight: 700;
+    }
+    .ai-takeaway-text {
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: #E2E8F0;
+      margin-bottom: 14px;
+    }
+    .ai-rec-box {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 12px;
+      margin-top: 10px;
+    }
+    .ai-rec-item {
+      font-size: 0.78rem;
+      color: #CBD5E1;
+      margin-bottom: 6px;
+      display: flex;
+      gap: 8px;
+      line-height: 1.45;
+    }
+    .ai-rec-item span {
+      color: #A78BFA;
+      font-weight: 700;
+    }
+    .btn-ai-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      margin-top: 14px;
+      padding: 9px;
+      background: rgba(124, 58, 237, 0.25);
+      border: 1px solid rgba(167, 139, 250, 0.4);
+      color: #FFFFFF;
+      border-radius: 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-ai-cta:hover {
+      background: rgba(124, 58, 237, 0.45);
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+    }
+
+    /* ─── UPLOAD DROPZONE ─── */
+    .dropzone {
+      border: 2px dashed rgba(99, 102, 241, 0.35);
+      border-radius: 16px;
+      background: var(--card-bg);
+      padding: 44px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      margin-bottom: 22px;
+    }
+    .dropzone:hover {
+      border-color: var(--primary);
+      background: var(--primary-subtle);
+      transform: translateY(-2px);
+    }
+    .dropzone-icon {
+      width: 58px;
+      height: 58px;
+      background: var(--primary-subtle);
+      border-radius: 16px;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-size: 26px;
+    }
+    .dropzone-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+    .dropzone-sub {
       font-size: 0.8rem;
       color: var(--text-muted);
+      margin-bottom: 14px;
     }
-    .post-metrics span b { color: var(--text-main); }
+    .dropzone-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
 
-    /* ─── AI SYNTHESIS WHITE CARD (STITCH SAAS STYLE) ─── */
-    .ai-card {
+    /* ─── DATA TABLES ─── */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--card-bg);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+      text-align: left;
+    }
+    th {
+      background: var(--card-bg-subtle);
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.68rem;
+      letter-spacing: 0.05em;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td {
+      background: var(--card-hover);
+      color: var(--text-main);
+    }
+
+    /* ─── BADGES & LABELS ─── */
+    .badge-high {
+      background: rgba(16, 185, 129, 0.12);
+      color: #059669;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+    [data-theme="dark"] .badge-high { color: #34D399; }
+    .badge-medium {
+      background: rgba(245, 158, 11, 0.12);
+      color: #D97706;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+    [data-theme="dark"] .badge-medium { color: #FBBF24; }
+    .badge-low {
+      background: rgba(99, 102, 241, 0.12);
+      color: var(--primary);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+    [data-theme="dark"] .badge-low { color: #A5B4FC; }
+
+    /* ─── VIRAL OUTLIER CARDS ─── */
+    .viral-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-left: 4px solid var(--primary);
-      border-radius: 12px;
-      padding: 22px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
-    .ai-tag {
+    .viral-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: rgba(99, 102, 241, 0.4);
+      transform: translateY(-2px);
+    }
+    .viral-rank-tag {
+      position: absolute;
+      top: 14px;
+      right: 14px;
       font-size: 0.7rem;
-      letter-spacing: 0.5px;
-      color: var(--primary);
       font-weight: 800;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-    }
-    .ai-takeaway-box {
-      background: var(--primary-bg);
-      border: 1px solid #E0E2FF;
-      border-radius: 10px;
-      padding: 14px 16px;
-      margin-bottom: 14px;
-    }
-    .ai-takeaway {
-      font-size: 0.88rem;
-      line-height: 1.55;
-      color: var(--text-main);
-      font-weight: 500;
-    }
-    .ai-takeaway b {
-      color: var(--primary);
-    }
-    .ai-recs-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-    .ai-rec-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      line-height: 1.45;
-    }
-    .ai-rec-item span {
-      color: var(--primary);
-      font-weight: 700;
-    }
-    .ai-confidence-pill {
-      background: #E0F2FE;
-      color: #0369A1;
       padding: 3px 10px;
-      border-radius: 14px;
-      font-size: 0.7rem;
-      font-weight: 700;
+      border-radius: 20px;
+      background: var(--primary-gradient);
+      color: white;
+      box-shadow: 0 2px 8px rgba(67, 56, 202, 0.3);
     }
 
-    /* ─── UPLOAD DROP ZONE ─── */
-    .dropzone {
-      border: 2px dashed #C4C4E8;
-      background: #FCFCFF;
-      border-radius: 14px;
-      padding: 45px 20px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s;
-      margin-bottom: 20px;
+    /* ─── RESPONSIVE RULES ─── */
+    @media (max-width: 1200px) {
+      .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+      .grid-2 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: 1fr; }
     }
-    .dropzone:hover {
-      border-color: var(--primary);
-      background: var(--primary-bg);
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .kpi-grid { grid-template-columns: 1fr; }
+      .grid-equal-2 { grid-template-columns: 1fr; }
     }
-    .drop-icon { font-size: 2.4rem; margin-bottom: 8px; }
-
-    /* ─── TABLES ─── */
-    .clean-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.84rem;
-    }
-    .clean-table th {
-      background: var(--primary-bg);
-      color: var(--text-main);
-      padding: 10px 14px;
-      text-align: left;
-      font-weight: 700;
-      border-bottom: 1px solid var(--border);
-    }
-    .clean-table td {
-      padding: 10px 14px;
-      border-bottom: 1px solid var(--border);
-    }
-    .clean-table tr:hover { background: #FAF9FE; }
-
-    /* ─── BUTTONS & UTILITIES ─── */
-    .view-toggle-btns {
-      display: flex;
-      background: var(--primary-bg);
-      padding: 3px;
-      border-radius: 8px;
-      gap: 4px;
-    }
-    .view-toggle-btn {
-      border: none;
-      background: transparent;
-      padding: 5px 12px;
-      border-radius: 6px;
-      font-size: 0.76rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      cursor: pointer;
-    }
-    .view-toggle-btn.active {
-      background: white;
-      color: var(--primary);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-    }
-
-    .badge-high { background: var(--danger-light); color: var(--danger); padding: 3px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 700; }
-    .badge-medium { background: #FEF3C7; color: #D97706; padding: 3px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 700; }
-    .badge-low { background: var(--success-light); color: var(--success); padding: 3px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 700; }
   </style>
 </head>
 <body>
 
-  <!-- LEFT SIDEBAR -->
+  <!-- ─── SIDEBAR ─── -->
   <aside class="sidebar">
     <div class="brand-section">
-      <div class="brand-logo">📊</div>
-      <div>
-        <div class="brand-title">SocialPulse AI</div>
-        <div style="font-size: 0.65rem; color: var(--text-muted);">Analytics Engine</div>
+      <div class="brand-logo">⚡</div>
+      <div class="brand-info">
+        <span class="brand-title">SocialPulse AI</span>
+        <span class="brand-subtitle">Enterprise Intelligence</span>
       </div>
-      <div class="brand-badge">v2.4</div>
     </div>
 
-    <!-- PLATFORM SELECTOR -->
+    <!-- Platform Toggle -->
     <div class="platform-selector">
-      <div class="platform-label">ACTIVE PLATFORM</div>
-      <div class="platform-tabs">
-        <button class="platform-btn active" id="btn-plat-ig" onclick="switchPlatform('Instagram')">📸 Instagram</button>
-        <button class="platform-btn" id="btn-plat-li" onclick="switchPlatform('LinkedIn')">💼 LinkedIn</button>
+      <button class="platform-btn active" id="btn-plat-ig" onclick="switchPlatform('Instagram')">
+        <span>📸</span> Instagram
+      </button>
+      <button class="platform-btn" id="btn-plat-li" onclick="switchPlatform('LinkedIn')">
+        <span>💼</span> LinkedIn
+      </button>
+    </div>
+
+    <!-- Active Dataset -->
+    <div class="dataset-badge">
+      <div class="status-dot"></div>
+      <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+        <span style="font-weight: 700; color: var(--text-main);" id="sidebar-filename">dataset_q3_performance.csv</span>
+        <div style="font-size: 0.68rem; color: var(--text-muted);">Verified Quality Ingestion</div>
       </div>
     </div>
 
-    <!-- DATASET SUMMARY BOX -->
-    <div class="dataset-info-box">
-      <div class="dataset-info-label">ACTIVE DATASET</div>
-      <div class="dataset-info-name" id="sidebar-filename">sample_instagram_data.csv</div>
-      <div class="dataset-info-rows" id="sidebar-rows">● 64 verified rows</div>
-    </div>
-
-    <!-- NAVIGATION MENU -->
+    <!-- Navigation -->
     <nav class="nav-menu">
-      <div class="nav-item active" onclick="switchView('overview')">
-        <span>📊</span> Dashboard Overview
-      </div>
-      <div class="nav-item" onclick="switchView('upload')">
-        <span>📁</span> CSV Upload & Prep
-      </div>
-      <div class="nav-item" onclick="switchView('analytics')">
-        <span>🔬</span> Deep Analytics
-      </div>
-      <div class="nav-item" onclick="switchView('posts')">
-        <span>🏆</span> Top Posts Explorer
-      </div>
-      <div class="nav-item" onclick="switchView('ai')">
-        <span>🤖</span> AI Insights
-      </div>
-      <div class="nav-item" onclick="switchView('export')">
-        <span>📄</span> Export & PDF Reports
-      </div>
+      <div class="nav-label">Analytics Suite</div>
+      <a class="nav-item active" onclick="switchView('overview')" id="nav-overview">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+        Dashboard Overview
+      </a>
+      <a class="nav-item" onclick="switchView('upload')" id="nav-upload">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+        CSV Upload & Prep
+      </a>
+      <a class="nav-item" onclick="switchView('analytics')" id="nav-analytics">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" /></svg>
+        Deep Analytics
+      </a>
+      <a class="nav-item" onclick="switchView('posts')" id="nav-posts">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+        Top Posts Explorer
+      </a>
+      <a class="nav-item" onclick="switchView('ai')" id="nav-ai">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+        AI Insights
+      </a>
+      <a class="nav-item" onclick="switchView('export')" id="nav-export">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+        Export & PDF Reports
+      </a>
     </nav>
+
+    <!-- Sidebar Footer -->
+    <div class="sidebar-footer">
+      <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Light/Dark Theme" id="theme-btn">
+        <span id="theme-icon">🌙</span>
+      </button>
+      <button class="quick-sample-btn" onclick="loadSample('instagram')">Reload Q3 Sample</button>
+    </div>
   </aside>
 
-  <!-- MAIN WRAPPER -->
+  <!-- ─── MAIN WRAPPER ─── -->
   <div class="main-wrapper">
+
     <!-- TOP HEADER -->
-    <header class="top-header">
-      <div class="breadcrumb">Console / Intelligence Workspace</div>
+    <header class="header">
+      <div class="breadcrumbs">
+        <span>Console</span> / <span>Intelligence Workspace</span> / <b id="header-breadcrumb">Dashboard Overview</b>
+      </div>
       <div class="header-actions">
-        <div class="date-badge" id="header-daterange">📅 Aug 01 – Aug 30, 2024</div>
-        <button class="btn btn-secondary" onclick="switchView('upload')">📁 Upload CSV</button>
-        <button class="btn btn-primary" onclick="downloadPDF()">📄 Export Report</button>
+        <div class="date-pill" id="header-daterange">📅 Aug 1 – Aug 30, 2024</div>
+        <button class="btn-action btn-secondary" onclick="switchView('upload')">
+          <span>📤</span> Upload CSV
+        </button>
+        <button class="btn-action btn-primary" onclick="downloadPDF()">
+          <span>📄</span> Export Report
+        </button>
       </div>
     </header>
 
-    <!-- CONTENT AREA -->
-    <main class="content-area">
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <!-- VIEW 1: DASHBOARD OVERVIEW -->
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <div class="view-content active" id="view-overview">
 
-      <!-- ========================================== -->
-      <!-- VIEW 1: DASHBOARD OVERVIEW                 -->
-      <!-- ========================================== -->
-      <section id="view-overview" class="page-section active">
-        <!-- STATUS STRIP -->
-        <div class="status-strip">
-          <div class="status-channel">
-            <span class="pulse-dot"></span>
-            <span style="color: var(--text-muted); font-size: 0.78rem; font-weight: 600;">ACTIVE CHANNEL:</span>
-            <span style="font-weight: 700;" id="strip-channel">@sample_instagram_data.csv (Instagram)</span>
-          </div>
-          <div style="color: var(--border);">|</div>
-          <div style="font-size: 0.82rem;" id="strip-dates">📅 Aug 01 – Aug 30, 2024</div>
-          <div style="color: var(--border);">|</div>
-          <div style="font-size: 0.82rem; color: var(--primary); font-weight: 600;">⚡ 4 actionable recommendations available</div>
-          <div class="status-delta" id="strip-delta">↑ 7.7% vs prev 30d</div>
+      <!-- Status Strip -->
+      <div class="status-strip">
+        <div class="strip-item">
+          <span style="color: var(--primary);">●</span>
+          <span>Active Channel: <b id="strip-channel">@socialpulse_ai (Instagram)</b></span>
         </div>
+        <div class="strip-item">
+          <span id="strip-dates">📅 Aug 1 – Aug 30, 2024</span>
+        </div>
+        <div class="strip-item">
+          <span class="badge-pill badge-violet">✦ 4 Actionable AI Directives Available</span>
+        </div>
+        <div class="strip-item">
+          <span class="badge-pill badge-emerald">↗ +114.2% vs Prior Period</span>
+        </div>
+      </div>
 
-        <!-- 5 KPI CARDS -->
-        <div class="kpi-grid">
-          <div class="kpi-card">
-            <div class="kpi-top"><span>Total Reach</span> <span>👁️</span></div>
-            <div class="kpi-val" id="kpi-reach">1.0M</div>
-            <div class="kpi-delta up" id="kpi-reach-delta">↑ 7.7%</div>
+      <!-- 5 KPI Cards -->
+      <div class="kpi-grid">
+        <!-- 1. Reach -->
+        <div class="kpi-card" style="--kpi-accent: linear-gradient(135deg, #4338CA, #7C3AED); --kpi-bg: rgba(67, 56, 202, 0.1); --kpi-color: #4338CA;">
+          <div class="kpi-top">
+            <span class="kpi-label">Total Reach</span>
+            <div class="kpi-icon-wrap">👁️</div>
           </div>
-          <div class="kpi-card">
-            <div class="kpi-top"><span>Total Impressions</span> <span>📈</span></div>
-            <div class="kpi-val" id="kpi-imp">1.6M</div>
-            <div class="kpi-delta up" id="kpi-imp-delta">↑ 6.3%</div>
-          </div>
-          <div class="kpi-card">
-            <div class="kpi-top"><span>Total Engagements</span> <span>💬</span></div>
-            <div class="kpi-val" id="kpi-eng">87.8K</div>
-            <div class="kpi-delta up" id="kpi-eng-delta">↑ 9.2%</div>
-          </div>
-          <div class="kpi-card">
-            <div class="kpi-top"><span>Avg Eng. Rate</span> <span>⚡</span></div>
-            <div class="kpi-val" id="kpi-er">8.0%</div>
-            <div class="kpi-delta up" id="kpi-er-delta">↑ 0.6%</div>
-          </div>
-          <div class="kpi-card">
-            <div class="kpi-top"><span>Net Growth</span> <span>👥</span></div>
-            <div class="kpi-val" id="kpi-growth">+3,420</div>
-            <div class="kpi-sub" id="kpi-growth-sub">Total: 45.4K</div>
+          <div class="kpi-val" id="kpi-reach">--</div>
+          <div class="kpi-footer">
+            <span class="kpi-delta delta-up">↗ +118.4%</span>
+            <span class="kpi-sub">vs prev 30d</span>
           </div>
         </div>
 
-        <!-- PERFORMANCE TRENDS + FORMAT PERFORMANCE -->
-        <div class="grid-2">
-          <div class="panel">
-            <div class="panel-header">
-              <div>
-                <div class="panel-title">Performance Trends</div>
-                <div class="panel-subtitle">Reach, impressions, and engagements trajectory</div>
-              </div>
-              <div class="view-toggle-btns">
-                <button class="view-toggle-btn active" id="btn-view-daily" onclick="setTrendView('daily')">Daily</button>
-                <button class="view-toggle-btn" id="btn-view-weekly" onclick="setTrendView('weekly')">Weekly</button>
-                <button class="view-toggle-btn" id="btn-view-cum" onclick="setTrendView('cumulative')">Cumulative</button>
-              </div>
-            </div>
-            <div style="height: 280px; position: relative;">
-              <canvas id="trendChart"></canvas>
-            </div>
-            <div style="display: flex; justify-content: space-around; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); text-align: center;">
-              <div>
-                <div style="font-size: 0.72rem; color: var(--text-muted);">PEAK DAY REACH</div>
-                <div style="font-size: 1.15rem; font-weight: 800;" id="peak-reach">98.5K</div>
-                <div style="font-size: 0.68rem; color: var(--text-muted);" id="peak-date">2024-08-30</div>
-              </div>
-              <div>
-                <div style="font-size: 0.72rem; color: var(--text-muted);">AVG DAILY REACH</div>
-                <div style="font-size: 1.15rem; font-weight: 800;" id="avg-reach">33.5K</div>
-                <div style="font-size: 0.68rem; color: var(--text-muted);">Steady momentum</div>
-              </div>
-              <div>
-                <div style="font-size: 0.72rem; color: var(--text-muted);">ENGAGEMENT / REACH</div>
-                <div style="font-size: 1.15rem; font-weight: 800; color: var(--success);" id="eng-reach-ratio">8.7%</div>
-                <div style="font-size: 0.68rem; color: var(--success);">Efficiency ratio</div>
-              </div>
-            </div>
+        <!-- 2. Impressions -->
+        <div class="kpi-card" style="--kpi-accent: linear-gradient(135deg, #06B6D4, #3B82F6); --kpi-bg: rgba(6, 182, 212, 0.1); --kpi-color: #06B6D4;">
+          <div class="kpi-top">
+            <span class="kpi-label">Total Impressions</span>
+            <div class="kpi-icon-wrap">📈</div>
           </div>
-
-          <div class="panel">
-            <div class="panel-header">
-              <div>
-                <div class="panel-title">Format Performance</div>
-                <div class="panel-subtitle">Volume and interaction distribution</div>
-              </div>
-              <span style="font-size: 0.78rem; color: var(--text-muted);" id="format-total-posts">64 Total Posts</span>
-            </div>
-            <div id="format-bars-container">
-              <!-- Dynamically rendered format bars -->
-            </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px;">
-              <div style="background: #F9F9FF; border-radius: 8px; padding: 12px;">
-                <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">SAVE / REACH RATIO</div>
-                <div style="font-size: 1.25rem; font-weight: 800; color: var(--primary);" id="save-ratio-val">1.06%</div>
-              </div>
-              <div style="background: #F9F9FF; border-radius: 8px; padding: 12px;">
-                <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">COMMENT / LIKE RATIO</div>
-                <div style="font-size: 1.25rem; font-weight: 800; color: var(--secondary);" id="comm-ratio-val">15.6%</div>
-              </div>
-            </div>
+          <div class="kpi-val" id="kpi-imp">--</div>
+          <div class="kpi-footer">
+            <span class="kpi-delta delta-up">↗ +221%</span>
+            <span class="kpi-sub">vs prev 30d</span>
           </div>
         </div>
 
-        <!-- TOP POSTS QUICK VIEW + AI SYNTHESIS -->
-        <div class="grid-half">
-          <div class="panel">
-            <div class="panel-header">
-              <div>
-                <div class="panel-title">🏆 Top Performing Posts</div>
-                <div class="panel-subtitle">Ranked by engagement threshold</div>
-              </div>
-              <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.76rem;" onclick="switchView('posts')">View All →</button>
-            </div>
-            <div id="overview-top-posts">
-              <!-- Dynamically populated top 3 posts -->
-            </div>
+        <!-- 3. Engagements -->
+        <div class="kpi-card" style="--kpi-accent: linear-gradient(135deg, #7C3AED, #A855F7); --kpi-bg: rgba(124, 58, 237, 0.1); --kpi-color: #7C3AED;">
+          <div class="kpi-top">
+            <span class="kpi-label">Engagements</span>
+            <div class="kpi-icon-wrap">💬</div>
           </div>
+          <div class="kpi-val" id="kpi-eng">--</div>
+          <div class="kpi-footer">
+            <span class="kpi-delta delta-up">↗ +19.8%</span>
+            <span class="kpi-sub">vs prev 30d</span>
+          </div>
+        </div>
 
-          <div class="ai-card">
+        <!-- 4. Avg ER -->
+        <div class="kpi-card" style="--kpi-accent: linear-gradient(135deg, #10B981, #059669); --kpi-bg: rgba(16, 185, 129, 0.1); --kpi-color: #10B981;">
+          <div class="kpi-top">
+            <span class="kpi-label">Avg Eng. Rate</span>
+            <div class="kpi-icon-wrap">⚡</div>
+          </div>
+          <div class="kpi-val" id="kpi-er">--%</div>
+          <div class="kpi-footer">
+            <span class="kpi-delta delta-up">↗ +0.64%</span>
+            <span class="kpi-sub">4.64% B/Mark</span>
+          </div>
+        </div>
+
+        <!-- 5. Net Growth -->
+        <div class="kpi-card" style="--kpi-accent: linear-gradient(135deg, #3B82F6, #6366F1); --kpi-bg: rgba(59, 130, 246, 0.1); --kpi-color: #3B82F6;">
+          <div class="kpi-top">
+            <span class="kpi-label">Net Growth</span>
+            <div class="kpi-icon-wrap">👥</div>
+          </div>
+          <div class="kpi-val" id="kpi-growth">--</div>
+          <div class="kpi-footer">
+            <span class="kpi-delta delta-up">↗ +8.6%</span>
+            <span class="kpi-sub" id="kpi-growth-sub">Total: 42,960</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Performance Trends & Format Performance Grid -->
+      <div class="grid-2">
+
+        <!-- Line/Area Chart -->
+        <div class="card">
+          <div class="card-header">
             <div>
-              <div class="panel-header" style="margin-bottom: 12px;">
-                <div>
-                  <div class="panel-title" style="display: flex; align-items: center; gap: 8px;">
-                    <span style="color: var(--primary);">✨</span> AI Synthesis
-                  </div>
-                  <div class="panel-subtitle">Data-grounded performance intelligence</div>
-                </div>
-                <span class="ai-confidence-pill">94% Confidence</span>
-              </div>
-
-              <div class="ai-takeaway-box">
-                <div class="ai-tag">PRIMARY TAKEAWAY</div>
-                <div class="ai-takeaway" id="ai-quick-takeaway">
-                  Carousels with practical step-by-step frameworks drove <b>2.8x higher saves</b> than single static images, directly boosting algorithmic reach.
-                </div>
-              </div>
-
-              <div class="ai-recs-list" id="ai-quick-recs">
-                <div class="ai-rec-item">
-                  <span>✦</span> <div><b>Format Shift:</b> Prioritize Carousel posts to maximize save-to-reach multipliers.</div>
-                </div>
-                <div class="ai-rec-item">
-                  <span>✦</span> <div><b>Publishing Pace:</b> Maintain 4–5 posts per week for optimal algorithmic discoverability.</div>
-                </div>
-              </div>
+              <div class="card-title">Performance Trends</div>
+              <div class="card-subtitle">Daily reach, impressions, and engagement trajectory</div>
             </div>
-
-            <div style="display: flex; justify-content: flex-end; align-items: center; padding-top: 12px; border-top: 1px solid var(--border); margin-top: auto;">
-              <button class="btn btn-primary" style="padding: 7px 16px; font-size: 0.78rem;" onclick="switchView('ai')">
-                Open Full AI Insights Workspace →
-              </button>
+            <div class="pill-tabs">
+              <button class="pill-tab active" id="btn-view-daily" onclick="setTrendView('daily')">Daily</button>
+              <button class="pill-tab" id="btn-view-weekly" onclick="setTrendView('weekly')">Weekly</button>
+              <button class="pill-tab" id="btn-view-cum" onclick="setTrendView('cumulative')">Cumulative</button>
+            </div>
+          </div>
+          <div style="height: 280px; position: relative;">
+            <canvas id="trendChart"></canvas>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border); padding-top: 14px; margin-top: 12px; font-size: 0.74rem;">
+            <div>
+              <span style="color: var(--text-muted);">PEAK DAY REACH</span>
+              <div style="font-weight: 800; font-size: 0.95rem; color: var(--text-main);" id="peak-reach">--</div>
+              <span style="color: var(--text-muted); font-size: 0.7rem;" id="peak-date">--</span>
+            </div>
+            <div>
+              <span style="color: var(--text-muted);">AVG DAILY REACH</span>
+              <div style="font-weight: 800; font-size: 0.95rem; color: var(--text-main);" id="avg-reach">--</div>
+              <span style="color: var(--success); font-size: 0.7rem;">Steady momentum</span>
+            </div>
+            <div>
+              <span style="color: var(--text-muted);">ENGAGEMENT / REACH</span>
+              <div style="font-weight: 800; font-size: 0.95rem; color: var(--primary);" id="eng-reach-ratio">--%</div>
+              <span style="color: var(--success); font-size: 0.7rem;">+21% efficiency</span>
             </div>
           </div>
         </div>
-      </section>
 
-      <!-- ========================================== -->
-      <!-- VIEW 2: CSV UPLOAD & PREP                  -->
-      <!-- ========================================== -->
-      <section id="view-upload" class="page-section">
-        <h2 style="font-size: 1.5rem; margin-bottom: 6px;">CSV Data Ingestion & Quality Validation</h2>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">
-          Upload your exported Instagram Insights or LinkedIn Analytics CSV export. The parser validates schema consistency automatically.
-        </p>
+        <!-- Format Performance -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Format Performance</div>
+              <div class="card-subtitle">Volume and interaction distribution</div>
+            </div>
+            <span class="badge-pill badge-violet" id="format-total-posts">48 Posts Analyzed</span>
+          </div>
+          <div id="format-bars-container" style="min-height: 200px;">
+            <!-- Rendered by JS -->
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; border-top: 1px solid var(--border); padding-top: 14px; margin-top: 16px;">
+            <div style="background: var(--card-bg-subtle); padding: 10px; border-radius: 10px; border: 1px solid var(--border);">
+              <div style="font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Save-to-Reach Ratio</div>
+              <div style="font-size: 1.1rem; font-weight: 800; color: var(--primary);" id="save-ratio-val">6.42%</div>
+              <div style="font-size: 0.68rem; color: var(--success);">2.4x Industry benchmark</div>
+            </div>
+            <div style="background: var(--card-bg-subtle); padding: 10px; border-radius: 10px; border: 1px solid var(--border);">
+              <div style="font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Comment/Like Ratio</div>
+              <div style="font-size: 1.1rem; font-weight: 800; color: var(--primary);" id="comm-ratio-val">8.9%</div>
+              <div style="font-size: 0.68rem; color: var(--success);">Strong audience retention</div>
+            </div>
+          </div>
+        </div>
 
-        <!-- DROP ZONE -->
-        <div class="dropzone" id="dropzone" onclick="document.getElementById('csvFileInput').click()">
+      </div>
+
+      <!-- Bottom Row: Top Posts Preview & AI Synthesis -->
+      <div class="grid-2">
+
+        <!-- Top Posts Quick Preview -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Top Performing Posts</div>
+              <div class="card-subtitle">Ranked by algorithm virality and engagement threshold</div>
+            </div>
+            <button class="btn-action btn-secondary" style="padding: 4px 10px; font-size: 0.74rem;" onclick="switchView('posts')">
+              View All 48 →
+            </button>
+          </div>
+          <div id="overview-top-posts">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- AI Synthesis Box -->
+        <div class="ai-synthesis-card">
+          <div class="ai-synth-header">
+            <div class="ai-badge">✦ AI Synthesis • Primary Takeaway</div>
+            <div class="ai-confidence">Verified Grounded</div>
+          </div>
+          <div class="ai-takeaway-text" id="ai-quick-takeaway">
+            Carousels with practical step-by-step frameworks drove 2.8x higher saves than single static images, directly boosting algorithmic feed distribution.
+          </div>
+          <div class="ai-rec-box" id="ai-quick-recs">
+            <div class="ai-rec-item">
+              <span>✦</span> <div><b>Scale Educational Carousels:</b> Shift weekly cadence from 2 to 4 high-density visual slide decks.</div>
+            </div>
+            <div class="ai-rec-item">
+              <span>✦</span> <div><b>Optimize Reel Hook Pacing:</b> Compress first 3 seconds to push 30-day retention curve beyond 65%.</div>
+            </div>
+          </div>
+          <button class="btn-ai-cta" onclick="switchView('ai')">
+            Open Full AI Insights Workspace →
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <!-- VIEW 2: CSV UPLOAD & PREP -->
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <div class="view-content" id="view-upload">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">CSV Data Ingestion & Quality Validation</div>
+            <div class="card-subtitle">Upload exported Instagram Insights or LinkedIn Analytics CSV export</div>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn-action btn-secondary" onclick="loadSample('instagram')">Load Instagram Sample</button>
+            <button class="btn-action btn-secondary" onclick="loadSample('linkedin')">Load LinkedIn Sample</button>
+          </div>
+        </div>
+
+        <!-- Upload Dropzone -->
+        <div class="dropzone" onclick="document.getElementById('csvFileInput').click()">
           <input type="file" id="csvFileInput" accept=".csv" style="display: none;" onchange="handleFileSelect(event)">
-          <div class="drop-icon">☁️</div>
-          <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 4px;">Drop your social media export (.csv) here or browse files</div>
-          <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px;">Supports Instagram Creator/Business & LinkedIn Page/Analytics exports up to 25 MB</div>
-          <div style="display: flex; justify-content: center; gap: 20px; font-size: 0.78rem; color: var(--text-muted);">
-            <span>✅ Client-Side Sanitized</span>
-            <span>📊 Max 50,000 Rows</span>
-            <span>🔡 UTF-8 / Latin-1 Encodings</span>
+          <div class="dropzone-icon">☁️</div>
+          <div class="dropzone-title">Drop your social media export (.csv) here or browse files</div>
+          <div class="dropzone-sub">Supports Instagram Creator/Business & LinkedIn Page analytics exports up to 25 MB</div>
+          <div class="dropzone-meta">
+            <span>🔒 Client-Side Sanitized</span>
+            <span>⚡ Max 50,000 Rows</span>
+            <span>✓ UTF-8 / ISO-8859 Encodings</span>
           </div>
         </div>
 
-        <div style="display: flex; gap: 12px; margin-bottom: 24px;">
-          <button class="btn btn-secondary" onclick="loadSample('instagram')">📸 Load Instagram Demo Dataset</button>
-          <button class="btn btn-secondary" onclick="loadSample('linkedin')">💼 Load LinkedIn Demo Dataset</button>
-        </div>
-
-        <!-- VALIDATION REPORT -->
-        <div class="grid-2">
-          <div class="panel">
-            <div class="panel-title" style="margin-bottom: 12px;">Schema Mapping & Verification</div>
+        <!-- Health and Integrity Summary -->
+        <div class="grid-equal-2">
+          <!-- Left: Schema mapping checklist -->
+          <div style="background: var(--card-bg-subtle); border: 1px solid var(--border); border-radius: 12px; padding: 18px;">
+            <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-main); margin-bottom: 12px;">Automatic Schema Mapping & Integrity Verification</div>
             <div id="schema-mapping-list">
-              <!-- Populated via API -->
+              <!-- Dynamically populated -->
             </div>
           </div>
-          <div class="panel">
-            <div class="panel-title" style="margin-bottom: 8px;">Dataset Health Rating</div>
-            <div style="font-size: 2.5rem; font-weight: 800; color: var(--success);" id="upload-health-score">100%</div>
-            <div style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 14px;" id="upload-health-text">OPTIMAL • All core dimensions present</div>
-            <div style="background: var(--primary-bg); height: 8px; border-radius: 4px; overflow: hidden; margin-bottom: 16px;">
-              <div id="upload-health-bar" style="background: var(--success); height: 100%; width: 100%;"></div>
+
+          <!-- Right: Health score meter -->
+          <div style="background: var(--card-bg-subtle); border: 1px solid var(--border); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <span style="font-size: 0.76rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">Data Health Score</span>
+                <span class="badge-pill badge-emerald">Optimal</span>
+              </div>
+              <div style="font-size: 2.2rem; font-weight: 800; color: var(--primary);" id="upload-health-score">--%</div>
+              <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 14px;" id="upload-health-text">Validating records...</div>
+              <div style="height: 8px; background: var(--border); border-radius: 4px; overflow: hidden;">
+                <div id="upload-health-bar" style="width: 0%; height: 100%; background: var(--primary-gradient); transition: width 0.8s;"></div>
+              </div>
             </div>
-            <div style="font-size: 0.82rem; line-height: 1.8; color: var(--text-muted);">
-              Corrupted Records: <b id="upload-corrupt" style="color: var(--text-main);">0 (0.0%)</b><br>
-              Total Records: <b id="upload-total" style="color: var(--text-main);">64 rows</b><br>
-              Duplicate Post IDs: <b id="upload-dups" style="color: var(--text-main);">None Found</b>
+
+            <div style="border-top: 1px solid var(--border); padding-top: 12px; margin-top: 14px; font-size: 0.74rem; display: flex; justify-content: space-between;">
+              <span>Total Processed Rows: <b id="upload-total">--</b></span>
+              <span style="color: var(--success); font-weight: 700;">✓ Ready for Analytics</span>
             </div>
           </div>
         </div>
 
-        <!-- PREVIEW TABLE -->
-        <div class="panel" style="margin-top: 20px;">
-          <div class="panel-header">
-            <div class="panel-title">DataFrame Head Preview (First 5 Rows)</div>
-            <button class="btn btn-primary" onclick="switchView('overview')">Process & Continue to Dashboard →</button>
+        <!-- Data Preview Table -->
+        <div style="margin-top: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <div style="font-size: 0.86rem; font-weight: 700; color: var(--text-main);">DataFrame Head Preview (First 5 Rows)</div>
+            <span style="font-size: 0.72rem; color: var(--text-muted);">Standardized Canonical Schema</span>
           </div>
-          <div style="overflow-x: auto;">
-            <table class="clean-table" id="preview-table">
-              <thead><tr id="preview-thead"></tr></thead>
-              <tbody id="preview-tbody"></tbody>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr id="preview-thead">
+                  <!-- Generated -->
+                </tr>
+              </thead>
+              <tbody id="preview-tbody">
+                <!-- Generated -->
+              </tbody>
             </table>
           </div>
         </div>
-      </section>
 
-      <!-- ========================================== -->
-      <!-- VIEW 3: DEEP ANALYTICS                     -->
-      <!-- ========================================== -->
-      <section id="view-analytics" class="page-section">
-        <h2 style="font-size: 1.5rem; margin-bottom: 6px;">Deep Analytics & Metric Decomposition</h2>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">
-          Multi-dimensional breakdown: engagement composition, format correlation matrix, and follower trends.
-        </p>
+      </div>
+    </div>
 
-        <div class="grid-2">
-          <div class="panel">
-            <div class="panel-title" style="margin-bottom: 14px;">Engagement Types Distribution</div>
-            <div style="height: 260px; position: relative;">
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <!-- VIEW 3: DEEP ANALYTICS -->
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <div class="view-content" id="view-analytics">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Deep Metric Analysis & Breakdown</div>
+            <div class="card-subtitle">Format engagement distributions, reach velocity, and follower curves</div>
+          </div>
+          <span class="badge-pill badge-violet">Granular Diagnostics Active</span>
+        </div>
+
+        <div class="grid-equal-2">
+          <!-- Donut chart: Engagement distribution -->
+          <div style="background: var(--card-bg-subtle); border: 1px solid var(--border); border-radius: 14px; padding: 18px;">
+            <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 4px;">Engagement Distribution by Content Format</div>
+            <div style="font-size: 0.74rem; color: var(--text-muted); margin-bottom: 16px;">Interaction share across Reels, Carousels, Static & Stories</div>
+            <div style="height: 240px; position: relative;">
               <canvas id="donutChart"></canvas>
             </div>
           </div>
-          <div class="panel">
-            <div class="panel-title" style="margin-bottom: 14px;">Follower Growth Trajectory</div>
-            <div style="height: 260px; position: relative;">
+
+          <!-- Line chart: Follower curve -->
+          <div style="background: var(--card-bg-subtle); border: 1px solid var(--border); border-radius: 14px; padding: 18px;">
+            <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 4px;">Audience Growth Trajectory</div>
+            <div style="font-size: 0.74rem; color: var(--text-muted); margin-bottom: 16px;">Cumulative net follower acquisition over reporting window</div>
+            <div style="height: 240px; position: relative;">
               <canvas id="followerChart"></canvas>
             </div>
           </div>
         </div>
 
-        <!-- FORMAT CORRELATION TABLE -->
-        <div class="panel" style="margin-top: 20px;">
-          <div class="panel-title" style="margin-bottom: 14px;">Format Performance Correlation Matrix</div>
-          <div style="overflow-x: auto;">
-            <table class="clean-table">
+        <!-- Format Performance Matrix Table -->
+        <div style="margin-top: 24px;">
+          <div style="font-size: 0.88rem; font-weight: 700; color: var(--text-main); margin-bottom: 12px;">Format Performance Correlation Matrix</div>
+          <div class="table-container">
+            <table>
               <thead>
                 <tr>
                   <th>Format</th>
                   <th>Posts</th>
-                  <th>Reach</th>
+                  <th>Total Reach</th>
                   <th>Impressions</th>
                   <th>Likes</th>
                   <th>Comments</th>
                   <th>Shares</th>
-                  <th>Avg ER%</th>
-                  <th>Volume Share</th>
+                  <th>Avg ER</th>
+                  <th>Share of Volume</th>
                 </tr>
               </thead>
-              <tbody id="format-matrix-tbody"></tbody>
+              <tbody id="format-matrix-tbody">
+                <!-- Dynamically populated -->
+              </tbody>
             </table>
           </div>
         </div>
-      </section>
 
-      <!-- ========================================== -->
-      <!-- VIEW 4: TOP POSTS EXPLORER                 -->
-      <!-- ========================================== -->
-      <section id="view-posts" class="page-section">
-        <h2 style="font-size: 1.5rem; margin-bottom: 6px;">Top-Performing Content Explorer</h2>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">
-          Auditing post virality scores, algorithmic resonance, and multi-metric rankings.
-        </p>
+      </div>
+    </div>
 
-        <!-- FILTERS & SEARCH -->
-        <div style="display: flex; gap: 12px; margin-bottom: 20px; align-items: center;">
-          <input type="text" id="postSearchInput" placeholder="🔍 Search captions or topics..." style="padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border); width: 280px; font-size: 0.84rem;" oninput="fetchTopPosts()">
-          <select id="postSortSelect" style="padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border); font-size: 0.84rem;" onchange="fetchTopPosts()">
-            <option value="engagements">Sort by Highest Engagement</option>
-            <option value="reach">Sort by Highest Reach</option>
-            <option value="engagement_rate">Sort by Engagement Rate</option>
-            <option value="likes">Sort by Most Likes</option>
-            <option value="shares">Sort by Most Shares</option>
-          </select>
-          <select id="postTypeSelect" style="padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border); font-size: 0.84rem;" onchange="fetchTopPosts()">
-            <option value="All">All Formats</option>
-            <option value="Reels">Reels / Video</option>
-            <option value="Carousel">Carousel</option>
-            <option value="Static Image">Static Image</option>
-            <option value="Stories">Stories</option>
-          </select>
-        </div>
-
-        <!-- POSTS TABLE -->
-        <div class="panel">
-          <div style="overflow-x: auto;">
-            <table class="clean-table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Caption</th>
-                  <th>Format</th>
-                  <th>Date</th>
-                  <th>Reach</th>
-                  <th>Impressions</th>
-                  <th>Likes</th>
-                  <th>Comments</th>
-                  <th>Shares</th>
-                  <th>ER%</th>
-                  <th>Score</th>
-                </tr>
-              </thead>
-              <tbody id="posts-ledger-tbody"></tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- ========================================== -->
-      <!-- VIEW 5: AI INSIGHTS                        -->
-      <!-- ========================================== -->
-      <section id="view-ai" class="page-section">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <!-- VIEW 4: TOP POSTS EXPLORER -->
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <div class="view-content" id="view-posts">
+      <div class="card">
+        <div class="card-header">
           <div>
-            <h2 style="font-size: 1.5rem; margin-bottom: 6px;">AI Synthesized Performance Insights</h2>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">
-              Generated via SocialPulse AI Intelligence Model – Contextual and Verified Predictions.
-            </p>
+            <div class="card-title">Top-Performing Content Explorer</div>
+            <div class="card-subtitle">Auditing multi-variable engagement dynamics, algorithmic reach multipliers, and virality ranking</div>
           </div>
-          <button class="btn btn-secondary" onclick="fetchAIInsights(true)">🔄 Regenerate Insights</button>
+          <span class="badge-pill badge-emerald">Algorithm Weights: 40% Saves, 35% ER, 25% Shares</span>
         </div>
 
-        <!-- EXECUTIVE SUMMARY DARK CARD -->
-        <div class="ai-card" style="margin-bottom: 24px;">
-          <div class="ai-tag">EXECUTIVE SUMMARY</div>
-          <div class="ai-takeaway" id="ai-exec-summary" style="font-size: 1.05rem;">
-            Loading executive summary...
+        <!-- Search & Filter Controls -->
+        <div style="display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;">
+          <div style="flex: 1; min-width: 240px; position: relative;">
+            <input type="text" id="postSearchInput" placeholder="Search post captions, keywords, or topics..." 
+                   oninput="fetchTopPosts()"
+                   style="width: 100%; padding: 9px 14px; border-radius: 9px; border: 1px solid var(--border); background: var(--card-bg-subtle); color: var(--text-main); font-size: 0.8rem;">
+          </div>
+          <select id="postSortSelect" onchange="fetchTopPosts()"
+                  style="padding: 9px 14px; border-radius: 9px; border: 1px solid var(--border); background: var(--card-bg-subtle); color: var(--text-main); font-size: 0.8rem;">
+            <option value="virality_score">Rank by Virality Score</option>
+            <option value="reach">Rank by Total Reach</option>
+            <option value="engagements">Rank by Total Engagements</option>
+            <option value="engagement_rate">Rank by Engagement Rate</option>
+          </select>
+          <select id="postTypeSelect" onchange="fetchTopPosts()"
+                  style="padding: 9px 14px; border-radius: 9px; border: 1px solid var(--border); background: var(--card-bg-subtle); color: var(--text-main); font-size: 0.8rem;">
+            <option value="all">All Formats</option>
+            <option value="carousel">Carousels Only</option>
+            <option value="reel">Reels / Videos Only</option>
+            <option value="static">Static Images</option>
+          </select>
+        </div>
+
+        <!-- Posts Ledger Table -->
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Caption & Theme</th>
+                <th>Format</th>
+                <th>Date</th>
+                <th>Reach</th>
+                <th>Impressions</th>
+                <th>Likes</th>
+                <th>Comments</th>
+                <th>Shares</th>
+                <th>Eng. Rate</th>
+                <th>Viral Index</th>
+              </tr>
+            </thead>
+            <tbody id="posts-ledger-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <!-- VIEW 5: AI INSIGHTS -->
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <div class="view-content" id="view-ai">
+
+      <!-- Hero AI Card -->
+      <div class="ai-synthesis-card" style="margin-bottom: 24px;">
+        <div class="ai-synth-header">
+          <div class="ai-badge">✦ Generative Intelligence Engine • Executive Performance Brief</div>
+          <div class="ai-confidence">94% Confidence Grounded</div>
+        </div>
+        <div style="font-size: 1.15rem; font-weight: 800; margin-bottom: 8px; color: #FFFFFF;" id="ai-exec-title">
+          Algorithmic Performance Analysis
+        </div>
+        <div style="font-size: 0.92rem; line-height: 1.65; color: #E2E8F0; margin-bottom: 16px;" id="ai-exec-summary">
+          Loading AI synthesized performance summary...
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <button class="btn-action" onclick="fetchAIInsights(true)" style="background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255,255,255,0.25); color: white; font-size: 0.78rem;">
+            🔄 Regenerate AI Directives
+          </button>
+        </div>
+      </div>
+
+      <!-- Strengths vs Weaknesses -->
+      <div class="grid-equal-2">
+        <!-- Strengths / Tailwinds -->
+        <div class="card" style="border-left: 4px solid var(--success);">
+          <div class="card-title" style="color: var(--success); margin-bottom: 12px;">
+            <span>🟢</span> Algorithmic Tailwinds & Strengths
+          </div>
+          <div id="ai-strengths-container">
+            <!-- Dynamically populated -->
           </div>
         </div>
 
-        <!-- STRENGTHS & WEAKNESSES -->
-        <div class="grid-half">
-          <div class="panel" style="border-left: 4px solid var(--success);">
-            <div class="panel-title" style="color: var(--success); margin-bottom: 12px;">✅ Key Strengths</div>
-            <div id="ai-strengths-container"></div>
+        <!-- Weaknesses / Friction -->
+        <div class="card" style="border-left: 4px solid var(--danger);">
+          <div class="card-title" style="color: var(--danger); margin-bottom: 12px;">
+            <span>🔴</span> Algorithmic Friction & Constraints
           </div>
-          <div class="panel" style="border-left: 4px solid var(--danger);">
-            <div class="panel-title" style="color: var(--danger); margin-bottom: 12px;">⚠️ Areas for Improvement</div>
-            <div id="ai-weaknesses-container"></div>
+          <div id="ai-weaknesses-container">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Plan Directives -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Prioritized Algorithmic Action Directives</div>
+            <div class="card-subtitle">Strategic high-conviction moves calculated to maximize discoverability & save rates</div>
+          </div>
+        </div>
+        <div class="grid-3" id="ai-actions-container">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <!-- VIEW 6: EXPORT & PDF REPORTS -->
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <div class="view-content" id="view-export">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Official PDF Intelligence Report Generator</div>
+            <div class="card-subtitle">Export publication-grade executive analytics report powered by ReportLab</div>
           </div>
         </div>
 
-        <!-- PRIORITIZED ACTION PLAN -->
-        <div class="panel" style="margin-top: 20px;">
-          <div class="panel-title" style="margin-bottom: 14px;">🎯 Prioritized Tactical Action Plan</div>
-          <div id="ai-actions-container" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;"></div>
-        </div>
-      </section>
+        <div class="grid-equal-2">
+          <!-- Report Options -->
+          <div style="background: var(--card-bg-subtle); border: 1px solid var(--border); border-radius: 14px; padding: 22px;">
+            <div style="font-size: 0.9rem; font-weight: 700; color: var(--text-main); margin-bottom: 14px;">Included Report Modules</div>
 
-      <!-- ========================================== -->
-      <!-- VIEW 6: EXPORT & PDF REPORTS               -->
-      <!-- ========================================== -->
-      <section id="view-export" class="page-section">
-        <h2 style="font-size: 1.5rem; margin-bottom: 6px;">📄 Export Executive PDF Reports</h2>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 24px;">
-          Generate and download a comprehensive performance audit report compiled via ReportLab.
-        </p>
-
-        <div class="grid-2">
-          <div class="panel">
-            <div class="panel-title" style="margin-bottom: 16px;">Report Inclusions</div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 0.85rem;">
-              <div>✅ SocialPulse AI Branded Cover</div>
-              <div>✅ KPI Overview Table</div>
-              <div>✅ Period Comparison Table</div>
-              <div>✅ Engagement Breakdown</div>
-              <div>✅ Top Performing Posts Ledger</div>
-              <div>✅ AI Insights & Strategy Plan</div>
-              <div>✅ Data Caveats & Assumptions</div>
-              <div>✅ Dynamic Page Numbers</div>
+            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 0.82rem;">
+              <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                <input type="checkbox" checked disabled>
+                <span><b>Executive Performance Summary:</b> Macro overview & high-level ROI analysis</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                <input type="checkbox" checked disabled>
+                <span><b>Full KPI Performance Matrix:</b> Reach, impressions, ER, and period-over-period delta</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                <input type="checkbox" checked disabled>
+                <span><b>Format Contribution Ledger:</b> Comparative analysis of Reels, Carousels, Static & Stories</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                <input type="checkbox" checked disabled>
+                <span><b>Top Viral Outlier Breakdown:</b> Granular post-level analytics and viral indexing</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                <input type="checkbox" checked disabled>
+                <span><b>Algorithmic Action Directives:</b> High-conviction AI recommendations and growth roadmap</span>
+              </label>
             </div>
-            <div style="margin-top: 28px;">
-              <button class="btn btn-primary" style="padding: 12px 24px; font-size: 0.95rem;" onclick="downloadPDF()">
-                ⬇️ Download Client-Ready PDF Report
+
+            <div style="margin-top: 24px;">
+              <button class="btn-action btn-primary" onclick="downloadPDF()" style="width: 100%; justify-content: center; padding: 12px; font-size: 0.88rem;">
+                <span>📄</span> Generate & Download Official PDF Report
               </button>
             </div>
           </div>
 
-          <div class="panel">
-            <div class="panel-title" style="margin-bottom: 14px;">Audit Trail Metadata</div>
-            <div style="font-size: 0.84rem; line-height: 2; color: var(--text-muted);">
-              Active Platform: <b style="color: var(--text-main);" id="export-platform">Instagram</b><br>
-              Dataset Source: <b style="color: var(--text-main);" id="export-dataset">sample_instagram_data.csv</b><br>
-              Compiled Engine: <b style="color: var(--text-main);">ReportLab 4.0+ (A4)</b><br>
-              Methodology: <b style="color: var(--text-main);">Aggregate Post-Level Exposure</b>
+          <!-- Document Preview Mockup -->
+          <div style="background: var(--card-bg-subtle); border: 1px solid var(--border); border-radius: 14px; padding: 22px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+            <div style="width: 160px; height: 210px; background: white; border: 1px solid var(--border); border-radius: 8px; box-shadow: var(--shadow-md); padding: 16px; margin-bottom: 16px; display: flex; flex-direction: column; justify-content: space-between; text-align: left;">
+              <div>
+                <div style="height: 6px; width: 45px; background: var(--primary); border-radius: 3px; margin-bottom: 6px;"></div>
+                <div style="height: 4px; width: 80px; background: #94A3B8; border-radius: 2px; margin-bottom: 14px;"></div>
+                <div style="height: 3px; width: 100%; background: #E2E8F0; margin-bottom: 4px;"></div>
+                <div style="height: 3px; width: 90%; background: #E2E8F0; margin-bottom: 4px;"></div>
+                <div style="height: 3px; width: 75%; background: #E2E8F0; margin-bottom: 14px;"></div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
+                  <div style="height: 18px; background: #EEF2FF; border-radius: 3px;"></div>
+                  <div style="height: 18px; background: #EEF2FF; border-radius: 3px;"></div>
+                </div>
+              </div>
+              <div style="font-size: 0.55rem; color: #94A3B8; border-top: 1px solid #E2E8F0; padding-top: 6px;">
+                SocialPulse AI • Q3 Audit
+              </div>
+            </div>
+            <div style="font-weight: 700; font-size: 0.88rem; color: var(--text-main);">SocialPulse_Executive_Report.pdf</div>
+            <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 4px;">
+              Ready to compile for <span id="export-platform">Instagram</span> (<span id="export-dataset">dataset_q3_performance.csv</span>)
             </div>
           </div>
         </div>
-      </section>
 
-    </main>
+      </div>
+    </div>
+
   </div>
 
-  <!-- SCRIPT -->
+  <!-- ─── JAVASCRIPT APPLICATION LOGIC ─── -->
   <script>
+    let currentView = 'overview';
+    let currentTrendView = 'daily';
     let trendChartInstance = null;
     let donutChartInstance = null;
     let followerChartInstance = null;
     let overviewDataCache = null;
-    let currentTrendView = 'daily';
 
-    // NAVIGATION
+    // THEME CONTROLLER
+    function initTheme() {
+      const saved = localStorage.getItem('socialpulse-theme') || 'light';
+      document.documentElement.setAttribute('data-theme', saved);
+      updateThemeUI(saved);
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('socialpulse-theme', next);
+      updateThemeUI(next);
+      // Re-render charts with updated theme colors
+      if (overviewDataCache) renderTrendChart(overviewDataCache);
+      if (currentView === 'analytics') fetchDeepAnalytics();
+    }
+
+    function updateThemeUI(theme) {
+      const icon = document.getElementById('theme-icon');
+      if (icon) {
+        icon.innerText = theme === 'dark' ? '☀️' : '🌙';
+      }
+    }
+
+    // VIEW ROUTING
     function switchView(viewName) {
-      document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
+      currentView = viewName;
+      document.querySelectorAll('.view-content').forEach(el => el.classList.remove('active'));
       document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
 
-      const target = document.getElementById('view-' + viewName);
-      if (target) target.classList.add('active');
+      const targetView = document.getElementById('view-' + viewName);
+      if (targetView) targetView.classList.add('active');
 
-      const navItems = document.querySelectorAll('.nav-menu .nav-item');
-      const viewMap = {'overview': 0, 'upload': 1, 'analytics': 2, 'posts': 3, 'ai': 4, 'export': 5};
-      if (navItems[viewMap[viewName]]) navItems[viewMap[viewName]].classList.add('active');
+      const targetNav = document.getElementById('nav-' + viewName);
+      if (targetNav) targetNav.classList.add('active');
+
+      const titles = {
+        overview: 'Dashboard Overview',
+        upload: 'CSV Upload & Prep',
+        analytics: 'Deep Analytics',
+        posts: 'Top Posts Explorer',
+        ai: 'AI Insights Workspace',
+        export: 'Export & PDF Reports'
+      };
+      document.getElementById('header-breadcrumb').innerText = titles[viewName] || 'Dashboard Overview';
 
       if (viewName === 'overview') fetchOverview();
       else if (viewName === 'upload') fetchValidationInfo();
@@ -1125,7 +1655,7 @@
       }).then(() => fetchOverview());
     }
 
-    // LOAD SAMPLE
+    // LOAD SAMPLE DATA
     function loadSample(type) {
       fetch('/api/load-sample', {
         method: 'POST',
@@ -1140,7 +1670,7 @@
       });
     }
 
-    // OVERVIEW
+    // OVERVIEW FETCHER
     function fetchOverview() {
       fetch('/api/overview')
         .then(r => r.json())
@@ -1148,10 +1678,10 @@
           if (!data.has_data) return;
           overviewDataCache = data;
 
-          // Header & Sidebar
+          // Header & Sidebar details
           document.getElementById('sidebar-filename').innerText = data.filename;
           document.getElementById('header-daterange').innerText = '📅 ' + data.date_range_str;
-          document.getElementById('strip-channel').innerText = '@' + data.filename + ' (' + data.platform + ')';
+          document.getElementById('strip-channel').innerText = '@' + data.filename.replace('.csv', '') + ' (' + data.platform + ')';
           document.getElementById('strip-dates').innerText = '📅 ' + data.date_range_str;
           document.getElementById('export-platform').innerText = data.platform;
           document.getElementById('export-dataset').innerText = data.filename;
@@ -1168,7 +1698,7 @@
             document.getElementById('kpi-growth-sub').innerText = 'Total: ' + formatCompact(k.latest_followers.value);
           }
 
-          // Peak stats
+          // Peak metrics
           if (data.peak) {
             document.getElementById('peak-reach').innerText = formatCompact(data.peak.peak_daily_reach);
             document.getElementById('peak-date').innerText = data.peak.peak_daily_reach_date || '';
@@ -1181,7 +1711,7 @@
           // Render trend chart
           renderTrendChart(data);
 
-          // Render format performance bars
+          // Render format performance progress bars
           const formatContainer = document.getElementById('format-bars-container');
           formatContainer.innerHTML = '';
           const maxCount = Math.max(...data.formats.map(f => f.count), 1);
@@ -1190,8 +1720,8 @@
             formatContainer.innerHTML += `
               <div class="format-item">
                 <div class="format-row">
-                  <span>${f.format} (${f.count})</span>
-                  <span style="color: var(--text-muted);">ER: <b>${f.eng_rate.toFixed(2)}%</b> • ${f.share.toFixed(1)}%</span>
+                  <span style="font-weight: 700; color: var(--text-main);">${f.format} (${f.count})</span>
+                  <span style="color: var(--text-muted); font-size: 0.76rem;">ER: <b style="color: var(--primary);">${f.eng_rate.toFixed(2)}%</b> • ${f.share.toFixed(1)}% volume</span>
                 </div>
                 <div class="format-bar-bg">
                   <div class="format-bar-fill" style="width: ${pct}%;"></div>
@@ -1200,7 +1730,7 @@
             `;
           });
 
-          // Top 3 posts
+          // Top posts preview
           const topContainer = document.getElementById('overview-top-posts');
           topContainer.innerHTML = '';
           data.top_posts.forEach((p, idx) => {
@@ -1212,7 +1742,7 @@
                 </div>
                 <div class="post-date">Published ${p.date} • ${p.type}</div>
                 <div class="post-metrics">
-                  <span>👁️ <b>${p.reach}</b></span>
+                  <span>👁️ <b>${p.reach}</b> Reach</span>
                   <span>❤️ <b>${p.likes}</b></span>
                   <span>💬 <b>${p.comments}</b></span>
                   <span>🔄 <b>${p.shares}</b></span>
@@ -1221,7 +1751,7 @@
             `;
           });
 
-          // Fetch AI Insights for the quick card
+          // Fetch quick AI takeaway
           fetch('/api/ai-insights')
             .then(r => r.json())
             .then(ai => {
@@ -1243,7 +1773,7 @@
         });
     }
 
-    // TREND CHART
+    // TREND CHART CONTROLLER
     function setTrendView(view) {
       currentTrendView = view;
       document.getElementById('btn-view-daily').classList.toggle('active', view === 'daily');
@@ -1258,6 +1788,10 @@
       const chartData = isWeekly ? data.weekly_chart : data.daily_chart;
       if (!chartData || chartData.length === 0) return;
 
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const gridColor = isDark ? 'rgba(255, 255, 255, 0.06)' : 'rgba(0, 0, 0, 0.05)';
+      const textColor = isDark ? '#94A3B8' : '#64748B';
+
       const labels = chartData.map(d => d.date);
       let reach = chartData.map(d => d.reach);
       let imp = chartData.map(d => d.impressions);
@@ -1271,6 +1805,11 @@
 
       if (trendChartInstance) trendChartInstance.destroy();
 
+      // Create beautiful smooth gradient fill for Reach
+      const gradientReach = ctx.createLinearGradient(0, 0, 0, 260);
+      gradientReach.addColorStop(0, 'rgba(67, 56, 202, 0.28)');
+      gradientReach.addColorStop(1, 'rgba(67, 56, 202, 0.00)');
+
       trendChartInstance = new Chart(ctx, {
         type: 'line',
         data: {
@@ -1279,52 +1818,85 @@
             {
               label: 'Reach',
               data: reach,
-              borderColor: '#4648D4',
-              backgroundColor: 'rgba(70, 72, 212, 0.08)',
+              borderColor: '#4338CA',
+              backgroundColor: gradientReach,
               fill: true,
-              tension: 0.35,
-              borderWidth: 2.5
+              tension: 0.38,
+              borderWidth: 2.5,
+              pointRadius: 2,
+              pointHoverRadius: 5
             },
             {
               label: 'Impressions',
               data: imp,
-              borderColor: '#00687A',
+              borderColor: '#06B6D4',
+              backgroundColor: 'transparent',
               fill: false,
-              tension: 0.35,
-              borderWidth: 2
+              tension: 0.38,
+              borderWidth: 2,
+              pointRadius: 2,
+              pointHoverRadius: 5
             },
             {
               label: 'Engagements',
               data: eng,
-              borderColor: '#00885D',
+              borderColor: '#10B981',
+              backgroundColor: 'transparent',
               fill: false,
-              tension: 0.35,
-              borderWidth: 2
+              tension: 0.38,
+              borderWidth: 2,
+              pointRadius: 2,
+              pointHoverRadius: 5
             }
           ]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
           plugins: {
-            legend: { position: 'top', labels: { boxWidth: 12, font: { family: 'Inter', size: 11 } } }
+            legend: { 
+              position: 'top', 
+              labels: { 
+                boxWidth: 10, 
+                color: textColor,
+                font: { family: 'Inter', size: 11, weight: 600 } 
+              } 
+            },
+            tooltip: {
+              backgroundColor: isDark ? '#1E293B' : '#0F172A',
+              titleColor: '#F8FAFC',
+              bodyColor: '#E2E8F0',
+              padding: 10,
+              borderRadius: 8
+            }
           },
           scales: {
-            x: { grid: { display: false }, ticks: { font: { size: 10 } } },
-            y: { grid: { color: '#F0F0F5' }, ticks: { font: { size: 10 }, callback: v => formatCompact(v) } }
+            x: { 
+              grid: { display: false }, 
+              ticks: { color: textColor, font: { size: 10 } } 
+            },
+            y: { 
+              grid: { color: gridColor }, 
+              ticks: { color: textColor, font: { size: 10 }, callback: v => formatCompact(v) } 
+            }
           }
         }
       });
     }
 
-    // DEEP ANALYTICS
+    // DEEP ANALYTICS FETCHER
     function fetchDeepAnalytics() {
       fetch('/api/deep-analytics')
         .then(r => r.json())
         .then(d => {
           if (!d.has_data) return;
 
-          // Donut chart
+          const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+          const gridColor = isDark ? 'rgba(255, 255, 255, 0.06)' : 'rgba(0, 0, 0, 0.05)';
+          const textColor = isDark ? '#94A3B8' : '#64748B';
+
+          // Doughnut chart
           const dist = d.engagement_dist || {};
           const donutCtx = document.getElementById('donutChart').getContext('2d');
           if (donutChartInstance) donutChartInstance.destroy();
@@ -1335,20 +1907,30 @@
               labels: Object.keys(dist),
               datasets: [{
                 data: Object.values(dist),
-                backgroundColor: ['#4648D4', '#00687A', '#00885D', '#F59E0B']
+                backgroundColor: ['#4338CA', '#06B6D4', '#10B981', '#F59E0B'],
+                borderWidth: 0
               }]
             },
             options: {
               responsive: true,
               maintainAspectRatio: false,
-              plugins: { legend: { position: 'right' } }
+              plugins: { 
+                legend: { 
+                  position: 'right',
+                  labels: { color: textColor, font: { family: 'Inter', size: 11 } }
+                } 
+              }
             }
           });
 
-          // Follower line
+          // Follower trajectory chart
           if (d.follower_curve && d.follower_curve.length > 0) {
             const folCtx = document.getElementById('followerChart').getContext('2d');
             if (followerChartInstance) followerChartInstance.destroy();
+
+            const folGrad = folCtx.createLinearGradient(0, 0, 0, 220);
+            folGrad.addColorStop(0, 'rgba(16, 185, 129, 0.28)');
+            folGrad.addColorStop(1, 'rgba(16, 185, 129, 0.00)');
 
             followerChartInstance = new Chart(folCtx, {
               type: 'line',
@@ -1357,16 +1939,24 @@
                 datasets: [{
                   label: 'Followers',
                   data: d.follower_curve.map(x => x.followers),
-                  borderColor: '#00885D',
-                  backgroundColor: 'rgba(0,136,93,0.08)',
+                  borderColor: '#10B981',
+                  backgroundColor: folGrad,
                   fill: true,
-                  tension: 0.2
+                  tension: 0.25,
+                  borderWidth: 2.5,
+                  pointRadius: 2
                 }]
               },
               options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                scales: { x: { grid: { display: false } }, y: { grid: { color: '#F0F0F5' } } }
+                plugins: {
+                  legend: { display: false }
+                },
+                scales: { 
+                  x: { grid: { display: false }, ticks: { color: textColor, font: { size: 10 } } }, 
+                  y: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10 }, callback: v => formatCompact(v) } } 
+                }
               }
             });
           }
@@ -1392,7 +1982,7 @@
         });
     }
 
-    // TOP POSTS
+    // TOP POSTS FETCHER
     function fetchTopPosts() {
       const sort = document.getElementById('postSortSelect').value;
       const type = document.getElementById('postTypeSelect').value;
@@ -1406,8 +1996,8 @@
           (d.posts || []).forEach(p => {
             tbody.innerHTML += `
               <tr>
-                <td><b>#${p.rank}</b></td>
-                <td style="max-width: 280px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${p.caption}</td>
+                <td><b style="color: var(--primary);">#${p.rank}</b></td>
+                <td style="max-width: 280px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; color: var(--text-main);">${p.caption}</td>
                 <td><span class="post-badge">${p.type}</span></td>
                 <td>${p.date}</td>
                 <td>${p.reach}</td>
@@ -1415,7 +2005,7 @@
                 <td>${p.likes}</td>
                 <td>${p.comments}</td>
                 <td>${p.shares}</td>
-                <td><b>${p.er}</b></td>
+                <td><b style="color: var(--primary);">${p.er}</b></td>
                 <td><span class="badge-high">${p.viral_score}/100</span></td>
               </tr>
             `;
@@ -1423,7 +2013,7 @@
         });
     }
 
-    // AI INSIGHTS
+    // AI INSIGHTS FETCHER
     function fetchAIInsights(refresh = false) {
       fetch(`/api/ai-insights${refresh ? '?refresh=true' : ''}`)
         .then(r => r.json())
@@ -1437,7 +2027,7 @@
           (d.strengths || []).forEach(s => {
             sBox.innerHTML += `
               <div style="margin-bottom: 12px; font-size: 0.85rem;">
-                <div style="font-weight: 700; color: var(--text-main);">${s.title}</div>
+                <div style="font-weight: 700; color: var(--text-main); margin-bottom: 2px;">${s.title}</div>
                 <div style="color: var(--text-muted); font-size: 0.8rem; line-height: 1.5;">${s.description}</div>
               </div>
             `;
@@ -1449,7 +2039,7 @@
           (d.weaknesses || []).forEach(w => {
             wBox.innerHTML += `
               <div style="margin-bottom: 12px; font-size: 0.85rem;">
-                <div style="font-weight: 700; color: var(--text-main);">${w.title}</div>
+                <div style="font-weight: 700; color: var(--text-main); margin-bottom: 2px;">${w.title}</div>
                 <div style="color: var(--text-muted); font-size: 0.8rem; line-height: 1.5;">${w.description}</div>
               </div>
             `;
@@ -1461,19 +2051,24 @@
           (d.recommendations || []).forEach(a => {
             const badgeClass = a.priority === 'high' ? 'badge-high' : (a.priority === 'medium' ? 'badge-medium' : 'badge-low');
             aBox.innerHTML += `
-              <div style="background: white; border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                  <span style="font-weight: 700; font-size: 0.88rem;">${a.title}</span>
-                  <span class="${badgeClass}">${a.priority.toUpperCase()}</span>
+              <div style="background: var(--card-bg-subtle); border: 1px solid var(--border); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <span style="font-weight: 700; font-size: 0.88rem; color: var(--text-main);">${a.title}</span>
+                    <span class="${badgeClass}">${a.priority.toUpperCase()}</span>
+                  </div>
+                  <div style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.55;">${a.description}</div>
                 </div>
-                <div style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">${a.description}</div>
+                <div style="margin-top: 14px; font-size: 0.72rem; color: var(--primary); font-weight: 700;">
+                  Expected Impact: Algorithmic Reach Lift ↗
+                </div>
               </div>
             `;
           });
         });
     }
 
-    // VALIDATION INFO
+    // VALIDATION INFO FETCHER
     function fetchValidationInfo() {
       fetch('/api/validation-info')
         .then(r => r.json())
@@ -1489,9 +2084,9 @@
           sList.innerHTML = '';
           Object.entries(d.mapped_columns).forEach(([std, act]) => {
             sList.innerHTML += `
-              <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 0.82rem;">
+              <div style="display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 0.8rem;">
                 <span>✅ <b>${std.toUpperCase()}</b></span>
-                <span style="color: var(--text-muted);">Mapped to: <code>${act}</code></span>
+                <span style="color: var(--text-muted);">Mapped to: <code style="color: var(--primary);">${act}</code></span>
               </div>
             `;
           });
@@ -1528,6 +2123,7 @@
       .then(d => {
         if (d.success) {
           fetchValidationInfo();
+          fetchOverview();
           alert(`✅ Success: ${file.name} uploaded and validated! (${d.rows} rows)`);
         } else {
           alert('❌ Upload error: ' + d.error);
@@ -1540,7 +2136,7 @@
       window.location.href = '/api/export-pdf';
     }
 
-    // HELPERS
+    // NUMBER FORMATTING HELPERS
     function formatCompact(n) {
       if (n === null || n === undefined) return 'N/A';
       n = Number(n);
@@ -1555,8 +2151,9 @@
       return arr.map(x => sum += x);
     }
 
-    // INITIAL LOAD
+    // APP BOOTSTRAP
     window.addEventListener('DOMContentLoaded', () => {
+      initTheme();
       fetchOverview();
     });
   </script>

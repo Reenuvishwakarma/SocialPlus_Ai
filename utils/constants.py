@@ -4,23 +4,23 @@ Central configuration for colors, column mappings, and application settings.
 """
 
 # ─── Brand Colors ───────────────────────────────────────────────────────────
-PRIMARY = "#4648D4"
-PRIMARY_LIGHT = "#6063EE"
-PRIMARY_BG = "#F0F0FF"
-BACKGROUND = "#F9F9FF"
+PRIMARY = "#4338CA"           # Deep Indigo
+PRIMARY_LIGHT = "#7C3AED"     # Electric Violet
+PRIMARY_BG = "#F5F3FF"        # Soft Lavender
+BACKGROUND = "#F5F3FF"        # Soft Lavender / Slate tint
 CARD_BG = "#FFFFFF"
-SECONDARY = "#00687A"
-SUCCESS = "#00885D"
-SUCCESS_LIGHT = "#E6F4ED"
-DANGER = "#DC3545"
-DANGER_LIGHT = "#FDE8EA"
-WARNING = "#F59E0B"
-TEXT_PRIMARY = "#141B2B"
-TEXT_MUTED = "#767586"
-BORDER_COLOR = "#E8E8F0"
+SECONDARY = "#06B6D4"         # Cyan
+SUCCESS = "#10B981"           # Emerald Green
+SUCCESS_LIGHT = "#ECFDF5"
+DANGER = "#F43F5E"            # Coral / Rose
+DANGER_LIGHT = "#FFF1F2"
+WARNING = "#F59E0B"           # Amber
+TEXT_PRIMARY = "#0F172A"      # Slate 900
+TEXT_MUTED = "#64748B"        # Slate 500
+BORDER_COLOR = "#E2E8F0"      # Slate 200
 
-# Chart color palette
-CHART_COLORS = [PRIMARY, SECONDARY, SUCCESS, "#F59E0B", "#E11D48", "#8B5CF6", "#06B6D4"]
+# Chart color palette (Deep Indigo, Cyan, Emerald, Violet, Coral, Amber, Blue)
+CHART_COLORS = [PRIMARY, SECONDARY, SUCCESS, "#7C3AED", "#F43F5E", "#F59E0B", "#3B82F6"]
 CHART_REACH_COLOR = PRIMARY
 CHART_IMPRESSIONS_COLOR = SECONDARY
 CHART_ENGAGEMENT_COLOR = SUCCESS
