@@ -1,317 +1,284 @@
 # SocialPulse AI – Social Media Performance Analyzer
 
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.28+-FF4B4B.svg)](https://streamlit.io)
-[![Plotly](https://img.shields.io/badge/Plotly-5.15+-3F4F75.svg)](https://plotly.com/)
-[![ReportLab](https://img.shields.io/badge/ReportLab-4.0+-brightgreen.svg)](https://www.reportlab.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+**An AI-powered social media analytics platform that transforms Instagram and LinkedIn CSV data into actionable performance insights.**
 
-An intelligent social media analytics dashboard and performance auditing platform built with Python, Streamlit, Pandas, Plotly, ReportLab, and Groq/OpenAI LLM APIs. Developed for the AI Engineering Internship technical assignment.
+## 🚀 Project Overview
 
----
+SocialPulse AI is an intelligent social media performance analyzer built using Python and Streamlit. It helps users understand, monitor, and improve their social media performance through interactive analytics, AI-generated insights, and downloadable PDF reports.
 
-## 1. Project Overview
+The application allows users to upload Instagram or LinkedIn analytics CSV files, automatically validate and process the data, calculate important performance metrics, identify top-performing posts, compare reporting periods, and generate actionable recommendations.
 
-**SocialPulse AI** transforms raw, exported social media analytics datasets (Instagram Insights and LinkedIn Analytics) into actionable business intelligence. Rather than displaying hardcoded mock numbers, the application executes genuine end-to-end data processing: ingesting CSV files, validating schemas, cleansing records, calculating verified engagement and growth metrics, conducting period-over-period comparisons, identifying viral outlier content, generating data-grounded AI insights, and compiling executive-ready PDF audit reports.
+It combines data analytics, interactive visualization, and AI-powered analysis in one centralized dashboard.
 
-The user interface reproduces the custom **Google Stitch SaaS design system**, featuring clean typography, structured metric cards, interactive multi-scale charts, and a responsive fixed-navigation layout.
+## 🎯 Problem Statement
 
----
+Social media platforms generate large amounts of performance data, but understanding this data and converting it into meaningful decisions can be challenging.
 
-## 2. Core Features
+Users often struggle to:
+- Analyze engagement and reach metrics.
+- Identify their best-performing content.
+- Understand performance trends.
+- Compare current and previous reporting periods.
+- Discover opportunities to improve content strategies.
+- Generate professional performance reports.
 
-### 📁 CSV Upload & Quality Validation
-- Drag-and-drop or file-browser ingestion for Instagram and LinkedIn analytics CSV exports (supports up to 25 MB and 50,000 rows).
-- Automatic schema detection and flexible column mapping matching dozens of alternate field nomenclatures.
-- Comprehensive data health inspection: reports total records, valid records, corrupted rows, negative metric values, and unparseable dates.
-- Interactive data preview table displaying mapped standardized dimensions before ingestion.
+SocialPulse AI addresses these challenges by automating the analytics process and presenting meaningful insights through an intuitive dashboard.
 
-### 📊 Dashboard Overview
-- Real-time status strip detailing active channels, verified row counts, reporting date ranges, and period comparisons.
-- Five core KPI cards: **Total Reach**, **Total Impressions**, **Total Engagements**, **Average Engagement Rate**, and **Net Follower Growth** with directional deltas.
-- Interactive Plotly area/line charts supporting **Daily**, **Weekly**, and **Cumulative** trend aggregation.
-- Format performance breakdown comparing Reels/Videos, Carousels, Static Images, and Stories.
-- Quick preview of top 3 outlier posts and AI synthesis card.
+## ✨ Key Features
 
-### 🔬 Deep Analytics Workspace
-- Comprehensive multi-metric trajectory analysis (Reach, Impressions, Engagements over time).
-- Content format performance correlation matrix (post counts, reach, shares, and engagement rates).
-- Engagement distribution donut chart (Likes, Comments, Shares, Saves).
-- Audience follower growth tracking over reporting intervals.
-- Period-over-period grouped bar charts benchmarking performance against previous intervals.
+### 1. Dashboard Overview
+- Five dynamic KPI cards.
+- Total reach and impressions tracking.
+- Engagement and follower growth analysis.
+- Interactive performance trend charts.
+- Content format performance breakdown.
+- Top-performing posts overview.
+- AI-generated performance summary.
 
-### 🏆 Top Posts Explorer
-- Multi-dimensional sorting: **Highest Reach**, **Highest Engagement**, **Highest Engagement Rate**, **Most Likes**, and **Most Shares**.
-- Real-time full-text search across captions and post topics.
-- Post format filtering (Reels, Carousels, Static Images, Documents, Articles).
-- Transparent normalized **Performance Score (0–100)** ranking individual posts relative to dataset peers.
+### 2. CSV Upload & Data Preparation
+- Upload Instagram and LinkedIn analytics CSV files.
+- Automatic column mapping.
+- CSV validation and data cleaning.
+- Duplicate record detection.
+- Missing value identification.
+- Invalid date and metric detection.
+- Dataset health report.
+- Cleaned dataset preview.
+- Manual column mapping support.
 
-### 🤖 AI Synthesized Insights
-- Dual-mode architecture:
-  - **AI-Powered Analysis**: Integrates with Groq (`llama-3.1-70b-versatile`) or OpenAI (`gpt-4o-mini`) via API key.
-  - **Deterministic Rule-Based Fallback**: Seamless fallback ensures 100% functionality without API keys.
-- Executive summary, primary performance takeaways, categorized strengths, and detected weaknesses.
-- Prioritized tactical action plans with high, medium, and low impact designations.
-- Strategy cards for Content Strategy, Engagement Optimization, Reach Growth, and Posting Consistency.
+### 3. Deep Analytics
+- Reach and impressions analysis.
+- Engagement distribution.
+- Likes, comments, shares, and saves analysis.
+- Content-type performance comparison.
+- Follower growth tracking.
+- Date-based filtering.
+- Current vs previous period comparison.
+- Interactive Plotly visualizations.
 
-### 📄 Client-Ready PDF Report Export
-- High-fidelity A4 document compilation powered by **ReportLab**.
-- Branded cover page, executive summaries, KPI tables, period comparison tables, engagement breakdowns, top post performance ledger, AI findings, and methodology disclosures.
-- Alternating row styling, custom typography, status badges, and dynamic page numbering.
+### 4. Top Posts Explorer
+- Identify top three performing posts.
+- Rank posts by reach.
+- Rank posts by engagement.
+- Rank posts by engagement rate.
+- Sort by likes and shares.
+- Search posts by caption.
+- Filter by content type and date.
+- Detailed searchable posts table.
+- Transparent performance scoring where sufficient data is available.
 
----
+### 5. AI-Powered Insights
+- AI-generated executive summary.
+- Primary performance takeaway.
+- Content strategy recommendations.
+- Engagement optimization suggestions.
+- Reach improvement recommendations.
+- Posting consistency analysis.
+- Performance strengths and weaknesses.
+- Data-grounded recommendations.
 
-## 3. Technology Stack
+**AI Integration:** Groq API or OpenAI API, configured through environment variables.
 
-| Domain | Technology | Purpose |
-|---|---|---|
-| **Language** | Python 3.10+ | Core application logic |
-| **Frontend / App Framework** | Streamlit | Reactive dashboard UI and navigation |
-| **Data Processing & Analytics** | Pandas, NumPy | Data cleaning, validation, and mathematical aggregation |
-| **Interactive Visualizations** | Plotly Express, Plotly Graph Objects | Dynamic charts with custom tooltips |
-| **AI Integration** | Groq API / OpenAI API | LLM synthesis of summarized performance metrics |
-| **PDF Generation** | ReportLab | Programmatic compilation of multi-page PDF reports |
-| **Testing** | Pytest | Automated unit and integration testing suite |
-| **Configuration** | python-dotenv | Secure environment variable management |
+A clearly labelled rule-based fallback is available when an AI API key is not configured.
 
----
+### 6. PDF Report Generation
+Generate downloadable professional PDF reports containing:
 
-## 4. Project Architecture & Folder Structure
+- Project branding and report details.
+- Selected social media platform.
+- Reporting period.
+- Dataset summary.
+- KPI overview.
+- Engagement analysis.
+- Period comparison.
+- Performance charts.
+- Top-performing posts.
+- AI-generated summary.
+- Actionable recommendations.
+- Data assumptions and limitations.
 
-```
+## 🛠️ Technology Stack
+
+| Category | Technologies |
+|---|---|
+| Programming Language | Python 3.11+ |
+| Frontend / Application | Streamlit |
+| Data Processing | Pandas, NumPy |
+| Data Visualization | Plotly Express, Plotly Graph Objects |
+| AI Integration | Groq API / OpenAI API |
+| PDF Generation | ReportLab |
+| Environment Management | python-dotenv |
+| Image Processing | Pillow |
+| Testing | Pytest |
+| Version Control | Git, GitHub |
+
+## 🏗️ Project Architecture
+
+SocialPulse AI follows a modular architecture that separates the user interface, data processing, analytics, AI integration, and report generation.
+
+### Application Workflow
+
+1. User uploads an Instagram or LinkedIn CSV file.
+2. The CSV loader reads the uploaded dataset.
+3. The validation and cleaning modules check data quality.
+4. The column mapper identifies and standardizes CSV columns.
+5. The analytics engine calculates performance metrics.
+6. The comparison engine evaluates reporting periods.
+7. Plotly generates interactive visualizations.
+8. The AI service generates data-grounded insights and recommendations.
+9. The PDF generator creates a downloadable analytics report.
+
+## 📂 Project Folder Structure
+
+```text
 SocialPulse_AI/
 │
-├── app.py                         # Application entry point & router
+├── app.py
 │
-├── pages/                         # Dashboard view modules & routes
-│   ├── 1_Dashboard_Overview.py    # Multi-page route: Overview
-│   ├── 2_CSV_Upload_and_Prep.py   # Multi-page route: Data Ingestion
-│   ├── 3_Deep_Analytics.py        # Multi-page route: Deep Analytics
-│   ├── 4_Top_Posts_Explorer.py    # Multi-page route: Top Posts
-│   ├── 5_AI_Insights.py           # Multi-page route: AI Insights
-│   ├── 6_Export_PDF_Reports.py    # Multi-page route: PDF Generator
-│   ├── dashboard_overview.py      # Core view implementation: Overview
-│   ├── csv_upload.py              # Core view implementation: CSV Upload
-│   ├── deep_analytics.py          # Core view implementation: Deep Analytics
-│   ├── top_posts_explorer.py      # Core view implementation: Top Posts
-│   ├── ai_insights_page.py        # Core view implementation: AI Insights
-│   └── export_pdf.py              # Core view implementation: Export PDF
+├── pages/
+│   ├── 1_Dashboard_Overview.py
+│   ├── 2_CSV_Upload_and_Prep.py
+│   ├── 3_Deep_Analytics.py
+│   ├── 4_Top_Posts_Explorer.py
+│   ├── 5_AI_Insights.py
+│   └── 6_Export_PDF_Reports.py
 │
-├── components/                    # Reusable UI components
-│   ├── sidebar.py                 # Stitch-styled sidebar & platform switcher
-│   ├── header.py                  # Breadcrumbs, date display & action bar
-│   ├── kpi_cards.py               # Metric cards with delta indicators
-│   ├── charts.py                  # Interactive Plotly chart builders
-│   ├── post_cards.py              # Viral outlier post preview cards
-│   └── filters.py                 # Date, format, and sorting controls
+├── components/
+│   ├── sidebar.py
+│   ├── header.py
+│   ├── kpi_cards.py
+│   ├── charts.py
+│   ├── post_cards.py
+│   └── filters.py
 │
-├── services/                      # Decoupled business logic & processing
-│   ├── csv_loader.py              # Multi-encoding CSV reader
-│   ├── column_mapper.py           # Intelligent schema matcher & normalizer
-│   ├── data_validator.py          # Data hygiene, health score & checks
-│   ├── data_cleaner.py            # Type enforcement & NaN handling
-│   ├── analytics_engine.py        # Mathematical KPI & trend formulas
-│   ├── comparison_engine.py       # Period-over-period comparative logic
-│   ├── ai_insights.py             # LLM orchestration & rule-based engine
-│   └── pdf_generator.py           # ReportLab document construction
+├── services/
+│   ├── csv_loader.py
+│   ├── data_validator.py
+│   ├── data_cleaner.py
+│   ├── column_mapper.py
+│   ├── analytics_engine.py
+│   ├── comparison_engine.py
+│   ├── ai_insights.py
+│   └── pdf_generator.py
 │
-├── utils/                         # Helper utilities & state
-│   ├── constants.py               # Design tokens, color palettes & schemas
-│   ├── formatters.py              # Currency, compact number & date helpers
-│   ├── helpers.py                 # Safe math, rolling averages & date filters
-│   └── session_manager.py         # Persistent Streamlit session management
+├── utils/
+│   ├── constants.py
+│   ├── formatters.py
+│   ├── helpers.py
+│   └── session_manager.py
 │
-├── assets/                        # Static styling & branding assets
-│   ├── custom.css                 # Stitch SaaS stylesheet
-│   └── logo.png                   # SocialPulse AI branding emblem
+├── assets/
+│   ├── logo.png
+│   └── custom.css
 │
-├── data/                          # Bundled demonstration datasets
-│   ├── sample_instagram_data.csv  # 64-row realistic Instagram export
-│   └── sample_linkedin_data.csv   # 41-row realistic LinkedIn export
+├── data/
+│   ├── sample_instagram_data.csv
+│   └── sample_linkedin_data.csv
 │
-├── tests/                         # Automated test suite
-│   ├── test_analytics.py          # Unit tests for KPI calculations
-│   ├── test_validation.py         # Unit tests for schema validation
-│   ├── test_comparison.py         # Unit tests for period comparisons
-│   └── test_integration.py        # End-to-end pipeline verification
+├── tests/
+│   ├── test_analytics.py
+│   ├── test_validation.py
+│   └── test_comparison.py
 │
-├── reports/                       # Generated PDF output directory
-├── .env.example                   # Environment variable template
-├── .gitignore                     # Git exclusion rules
-├── requirements.txt               # Pinned project dependencies
-└── README.md                      # Project documentation
+├── reports/
+│
+├── .env.example
+├── .gitignore
+├── requirements.txt
+└── README.md
 ```
 
----
+## 📊 Performance Metrics & Calculations
 
-## 5. Metric Calculation Formulas & Methodology
+SocialPulse AI uses consistent metric definitions to ensure accurate performance analysis.
 
-To ensure consistency, mathematical rigour, and transparency, the following formulas are enforced across all modules:
+**1. Total Engagements**
 
-### 1. Total Engagements
-$$\text{Total Engagements} = \text{Likes} + \text{Comments} + \text{Shares} + \text{Saves}$$
-*Note: If Saves or Shares are omitted in a user-provided CSV, the system sums available interactions without silently assuming missing values are zero, and clearly discloses the omitted dimension.*
+```text
+Total Engagements = Likes + Comments + Shares + Saves
+```
 
-### 2. Post-Level Engagement Rate (by Reach)
-$$\text{Engagement Rate}_{\text{post}} = \left( \frac{\text{Engagements}_{\text{post}}}{\text{Reach}_{\text{post}}} \right) \times 100$$
+If saves are unavailable, available interaction metrics are used and the limitation is disclosed.
 
-### 3. Average Engagement Rate
-$$\text{Average Engagement Rate} = \frac{1}{N} \sum_{i=1}^{N} \text{Engagement Rate}_i$$
-*Calculated as the mean of individual post engagement rates across all valid posts in the reporting window.*
+**2. Engagement Rate by Reach**
 
-### 4. Aggregate Reach & Impressions
-$$\text{Total Reach} = \sum \text{Reach}_{\text{post}}, \quad \text{Total Impressions} = \sum \text{Impressions}_{\text{post}}$$
-*Disclosed as aggregate post-level exposures rather than unique de-duplicated account-level audience counts.*
+```text
+Engagement Rate = (Total Engagements / Total Reach) × 100
+```
 
-### 5. Net Follower Growth
-$$\text{Net Growth} = \text{Followers}_{\text{latest}} - \text{Followers}_{\text{earliest}}$$
-*Calculated from chronological snapshots. If follower columns are unavailable, the metric is omitted with a clear disclosure.*
+**3. Average Post Engagement Rate**
 
-### 6. Period-over-Period Percentage Change
-$$\Delta\% = \left( \frac{\text{Current Period Value} - \text{Previous Period Value}}{|\text{Previous Period Value}|} \right) \times 100$$
-*Divisions by zero are safeguarded with fallbacks.*
+Calculated as the arithmetic mean of individual post engagement rates.
 
-### 7. Transparent Performance Score (0–100)
-A relative score calculated via weighted normalized metrics:
-- **Reach Contribution (30% weight)**: Normalized against min/max reach.
-- **Engagement Rate (30% weight)**: Normalized against min/max rate.
-- **Total Engagements (25% weight)**: Normalized against min/max total interactions.
-- **Shares / Virality Multiplier (15% weight)**: Normalized against min/max shares.
+**4. Follower Growth**
 
----
+```text
+Follower Growth = Latest Followers - Earliest Followers
+```
 
-## 6. Supported CSV Format & Column Mapping
+Follower growth is calculated only when valid follower snapshots are available.
 
-The system automatically recognizes standard headers across both major social platforms:
+**5. Percentage Change**
 
-| Standard Field | Supported CSV Header Aliases |
+```text
+Percentage Change =
+((Current Period - Previous Period) / Previous Period) × 100
+```
+
+Division-by-zero cases are handled safely.
+
+**Important:** Reach and impressions are aggregated from post-level records. They should not be interpreted as unique account-level audience counts.
+
+## 📁 Supported CSV Format
+
+The application supports Instagram analytics CSV files, LinkedIn analytics CSV files, and compatible custom datasets.
+
+| Standard Field | Supported Column Examples |
 |---|---|
-| **Date** | `Date`, `Published Date`, `Post Date`, `Publish Date`, `Publish_Date`, `date`, `timestamp` |
-| **Post Content** | `Post`, `Caption`, `Content`, `Description`, `Text`, `Title`, `Post Caption` |
-| **Post ID** | `Post_ID`, `Post ID`, `post_id`, `ID`, `id`, `Permalink`, `permalink` |
-| **Reach** | `Reach`, `reach`, `Accounts Reached`, `accounts_reached`, `Total Reach` |
-| **Impressions** | `Impressions`, `impressions`, `Views`, `views`, `Total Impressions` |
-| **Likes / Reactions** | `Likes`, `likes`, `Reactions`, `reactions`, `Hearts`, `Like Count` |
-| **Comments** | `Comments`, `comments`, `Comment Count`, `Replies`, `replies` |
-| **Shares / Reposts** | `Shares`, `shares`, `Reposts`, `reposts`, `Retweets`, `Share Count` |
-| **Saves / Bookmarks** | `Saves`, `saves`, `Bookmarks`, `bookmarks`, `Save Count` |
-| **Followers** | `Followers`, `followers`, `Followers Count`, `Total Followers` |
-| **Post Type / Format** | `Post Type`, `Post_Type`, `Media Type`, `Content Type`, `Format`, `type` |
+| Date | Date, Published Date, Post Date |
+| Post | Post, Caption, Content |
+| Reach | Reach, Accounts Reached |
+| Impressions | Impressions, Views |
+| Likes | Likes, Reactions |
+| Comments | Comments |
+| Shares | Shares, Reposts |
+| Followers | Followers, Followers Count |
+| Saves | Saves, Bookmarks |
+| Post Type | Post Type, Media Type, Content Type |
 
----
+Automatic column mapping helps standardize different CSV formats.
 
-## 7. Installation & Quick Start
+Missing metrics are not silently treated as zero. The application communicates unavailable metrics and their impact on calculations.
 
-### Prerequisites
-- Python 3.10, 3.11, or 3.12 installed on your machine.
-- Git installed.
+## 🤖 AI Integration
 
-### Step 1: Clone the Repository
-```bash
-git clone https://github.com/your-username/SocialPulse_AI.git
-cd SocialPulse_AI
-```
+SocialPulse AI integrates Large Language Models through the Groq API or OpenAI API.
 
-### Step 2: Create and Activate Virtual Environment
-**Windows (PowerShell / Command Prompt):**
-```powershell
-python -m venv venv
-.\venv\Scripts\activate
-```
+The AI service receives summarized performance metrics and calculated trends rather than unnecessarily sending the entire raw dataset.
 
-**macOS / Linux:**
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
+AI capabilities include:
+- Executive performance summaries.
+- Content strategy analysis.
+- Engagement optimization.
+- Reach improvement suggestions.
+- Identification of strengths and weaknesses.
+- Actionable recommendations.
 
-### Step 3: Install Required Dependencies
-```bash
-pip install -r requirements.txt
-```
+API keys are stored securely using environment variables.
 
-### Step 4: Configure Environment Variables (Optional for AI)
-Copy the example environment configuration file:
-```bash
-# Windows
-copy .env.example .env
+If an API key is unavailable, the application provides clearly labelled rule-based insights instead of pretending that the results are AI-generated.
 
-# macOS / Linux
-cp .env.example .env
-```
-Open `.env` and supply your API key:
-```env
-# AI Provider: "groq" or "openai"
-AI_PROVIDER=groq
+## 📄 PDF Report Generation
 
-# Groq API Key (Obtain from https://console.groq.com)
-GROQ_API_KEY=gsk_your_groq_api_key_here
+The PDF generation module uses ReportLab to create professional reports based on the currently selected dataset and reporting period.
 
-# Optional: OpenAI API Key (Obtain from https://platform.openai.com)
-OPENAI_API_KEY=sk-your_openai_api_key_here
+Reports include KPI tables, performance charts, engagement analysis, post rankings, AI insights, recommendations, and data limitations.
 
-# Model identifier
-AI_MODEL=llama-3.1-70b-versatile
-```
-*Note: If no API key is provided, SocialPulse AI automatically runs in **Deterministic Rule-Based Mode**, providing complete functionality without external API dependencies.*
 
-### Step 5: Launch the Application
-```bash
-streamlit run app.py
-```
-Open your browser to `http://localhost:8501`.
 
----
 
-## 8. Verification & Automated Testing
 
-SocialPulse AI includes a full Pytest suite verifying metric calculations, period comparisons, schema validations, and data cleaning.
 
-Execute the test suite with:
-```bash
-python -m pytest tests/ -v
-```
 
-Execute the full end-to-end integration test:
-```bash
-python tests/test_integration.py
-```
 
-### Test Coverage Results:
-- `tests/test_analytics.py`: 18 tests (Total reach, impressions, engagements, follower delta, engagement rate, empty inputs, format grouping, viral scoring).
-- `tests/test_validation.py`: 11 tests (Schema completeness, corrupted rows, negative metric guards, date parsing, health ratings).
-- `tests/test_comparison.py`: 8 tests (Period midpoint splitting, percentage changes, directional indicators, empty dataframe handling).
-- **Result: 37 of 37 tests passing (100% pass rate).**
-
----
-
-## 9. Assumptions and Known Limitations
-
-1. **Post-Level vs Account-Level Metrics**: Reach and impressions are calculated as post-level aggregates over the reporting timeframe. They do not represent deduplicated unique human viewers across multiple posts.
-2. **Follower Growth Snapshots**: Follower growth reflects the delta between the earliest and latest recorded follower values in the dataset. If cumulative snapshots are repeated across posts on the same date, they are not summed.
-3. **Period Midpoint Splitting**: When arbitrary date ranges are uploaded without explicit comparison parameters, the comparison engine divides the available date span at its temporal midpoint (first 50% vs second 50%).
-4. **Data Privacy**: CSV processing and metric normalization occur entirely in memory within the local runtime session. When AI features are utilized, only aggregated KPI summaries are transmitted to LLM endpoints—raw post bodies and proprietary identifier fields are never transmitted.
-
----
-
-## 10. Future Enhancements
-
-- Multi-account comparative benchmarking (Instagram vs LinkedIn side-by-side).
-- Direct Meta Graph API & LinkedIn Marketing Developer API OAuth integrations.
-- Time-of-day and day-of-week heatmaps for optimal posting schedule recommendation.
-- Automated sentiment analysis on post comment streams using local transformer models.
-- Scheduled background PDF email delivery.
-
----
-
-## 11. Evaluation Deliverables Checklist
-
-- [x] **Working Application**: Clean local execution via `streamlit run app.py`.
-- [x] **Real Data Processing**: Actual computations across 64-row Instagram and 41-row LinkedIn datasets.
-- [x] **Custom UI/UX**: Faithful implementation of Google Stitch design specifications (colors, cards, typography, navigation).
-- [x] **AI Synthesis**: Data-grounded executive summaries with Groq/OpenAI integration and rule-based fallback.
-- [x] **PDF Report Generation**: Complete multi-page ReportLab export with tables, covers, and metrics.
-- [x] **Robust Test Suite**: 37 unit and integration tests passing.
-- [x] **Documentation**: Comprehensive architecture, formulas, and user guide.
-#   S o c i a l P l u s _ A i  
- 
+⭐ If you find this project useful, consider giving the repository a star!
